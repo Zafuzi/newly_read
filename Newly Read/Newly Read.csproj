@@ -208,6 +208,7 @@
     <Content Include="packages.config" />
     <Content Include="lib\scripts\ai.0.22.19-build00125.js" />
     <Content Include="lib\scripts\ai.0.22.19-build00125.min.js" />
+    <Content Include="App_Browsers\Mobile.browser" />
     <None Include="lib\scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="lib\scripts\jquery-3.1.1.js" />
     <Content Include="lib\scripts\jquery-3.1.1.min.js" />
