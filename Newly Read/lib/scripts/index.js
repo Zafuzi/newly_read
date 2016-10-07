@@ -7,6 +7,10 @@ var myInit = {
     cache: 'default'
 };
 
+var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+console.log(iOS);
+
 var base_url = "https://webhose.io/search?token=ac283902-3c83-4eb5-baf3-8108376e137e&q=language:(english)%20performance_score:>3%20(site_type:news%20OR%20site_type:blogs)%20";
 
 $(function () {
@@ -47,21 +51,6 @@ var articles = {
     tech_articles_array: [],
     vehicles_articles_array: []
 };
-
-function getQuery(form, e) {
-    var data = $(form).serializeArray();
-    var query;
-    localStorage.removeItem('today');
-    $('#tab_today').html('');
-    data.map(obj => {
-        if (obj.name === "search") {
-            query = obj;
-        }
-    });
-    fetchToday(base_url + query);
-    articles.today_articles_array = JSON.parse(localStorage.getItem('today'));
-    displayArticles('tab_today');
-}
 
 function openModal(uuid, tab) {
     var tag = $('#' + uuid);
