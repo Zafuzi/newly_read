@@ -60,7 +60,6 @@ function openModal(uuid, tab) {
         if (post.uuid === uuid) {
             readableText = post.text.replace(/\n/g, '');
             var formattedText = post.text.replace(/\n/g, "</p><p>").trim();
-            console.log(formattedText);
             var article = $('<p class="article-text">');
             article.append(formattedText);
             modal.append(article);
@@ -177,7 +176,6 @@ function fetchTech(url, myInit) {
             return res.json();
         })
         .then(json => {
-            console.log(json);
             json.posts.map(post => {
                 articles.tech_articles_array.push(post);
             });
@@ -192,7 +190,6 @@ function fetchSports(url, myInit) {
             return res.json();
         })
         .then(json => {
-            console.log(json);
             json.posts.map(post => {
                 articles.vehicles_articles_array.push(post);
             });
@@ -207,7 +204,6 @@ function fetchToday(url, myInit) {
             return res.json();
         })
         .then(json => {
-            console.log(json);
             json.posts.map(post => {
                 articles.today_articles_array.push(post);
             });
@@ -237,7 +233,6 @@ function openCity(e, tabName) {
     document.getElementById(tabName).style.display = "flex";
     //evt.currentTarget.className += " active";
     if (e) {
-        console.log(e.target);
         e.target.className += " active";
     }
 }
@@ -247,7 +242,6 @@ var didScroll;
 var lastScrollTop = 0;
 var delta = 5;
 var navbarHeight = $('.header').height();
-console.log(navbarHeight);
 
 function hasScrolled() {
     var st = $(window).scrollTop();
