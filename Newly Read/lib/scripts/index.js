@@ -234,6 +234,9 @@ function openCity(e, tabName) {
     displayArticles(tabName);
     // Show the current tab, and add an "active" class to the link that opened the tab
     document.getElementById(tabName).style.display = "flex";
+    if (e != null) {
+        $(e).addClass('active');
+    }
 }
 
 $(".menu").unbind('change');

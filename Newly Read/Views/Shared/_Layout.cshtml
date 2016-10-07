@@ -18,12 +18,20 @@
 </head>
 <body>
     <header class="header">
-        <select class="row tab menu">
-            <option value="tab_today" class="tablinks">Today</option>
-            <option value="tab_tech" class="tablinks">Tech</option>
-            <option value="tab_vehicles" class="tablinks">Vehicles</option>
-            <option value="Refresh" class="tablinks" onclick="clearStorage(); location.reload();">Refresh</option>
-        </select>
+        <ul class="row tab">
+            <li value="tab_today" class="tablinks">
+                <a onclick="openCity(this, 'tab_today');">Today</a>
+            </li>
+            <li value="tab_tech" class="tablinks">
+                <a onclick="openCity(this, 'tab_tech');">Tech</a>
+            </li>
+            <li value="tab_vehicles" class="tablinks">
+                <a onclick="openCity(this, 'tab_vehicles');">Vehicles</a>
+            </li>
+            <li value="Refresh" class="tablinks">
+                <a onclick="clearStorage();"><i class="material-icons">refresh</i></a>
+            </li>
+        </ul>
         <p id="loading">Loading</p>
     </header>
 

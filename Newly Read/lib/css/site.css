@@ -10,6 +10,12 @@ body, html {
     box-sizing: border-box;
 }
 
+a {
+    text-decoration: none;
+    font-weight: lighter;
+    cursor: pointer;
+}
+
 header {
     background: #37474F;
     color: white;
@@ -21,42 +27,31 @@ header {
     padding: 0;
 }
 
-    header .tab {
+    .tab {
         list-style-type: none;
+        display: inline-flex;
+        width: 100vw;
         height: 100%;
-        width: 50%;
-        max-width: 300px;
-        margin: auto;
-        padding: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #FFEB3B;
-        background: #37474F;
-        outline: none;
-        border: 0px solid #fff;
-    }
-
-    header .menu:focus {
-        outline: none;
-    }
-
-    header .menu:active {
-        outline: none;
-    }
-
-    header .tab option {
-        display: flex;
         margin: 0;
         padding: 0;
-        height: 100%;
+        text-align: center;
         align-items: center;
         justify-content: center;
+        color: white;
+        z-index: 99;
     }
 
-.search {
-    color: #1e1e1e;
-}
+        .tab li {
+            display: inline-block;
+            margin: 10px;
+        }
+
+            .tab ul li a {
+                height: 100%;
+                padding: 25px;
+                display: block;
+                color: #fff !important;
+            }
 
 .modal {
     line-height: 2rem;
@@ -84,12 +79,7 @@ header {
     top: -100px;
 }
 
-a {
-    text-decoration: none;
-    font-weight: lighter;
-    color: #424242;
-    cursor: pointer;
-}
+
 /*On the flex container*/
 .flexcontainer {
     position: relative;
@@ -100,7 +90,7 @@ a {
     display: flex;
 }
 
-#loading{
+#loading {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -115,12 +105,14 @@ a {
     background: #1e1e1e;
     color: #fff;
 }
-.post-container{
+
+.post-container {
     align-self: center;
     justify-content: center;
     margin: auto;
     display: flex;
 }
+
 .post {
     display: flex;
     flex-direction: column;
@@ -179,8 +171,8 @@ a {
     flex-grow: 1;
 }
 
-@media (max-width: 48em){
-    .modal-close{
+@media (max-width: 48em) {
+    .modal-close {
         top: 7px;
         right: 10px;
     }
