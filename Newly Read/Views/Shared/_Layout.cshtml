@@ -10,25 +10,13 @@
 
     <link href="~/lib/css/normalize.css" rel="stylesheet" type="text/css" />
     <link href="~/lib/css/flexboxgrid.min.css" rel="stylesheet" type="text/css" />
-    <link href="~/lib/css/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/css/site.css" rel="stylesheet" type="text/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-
-    <environment names="Development">
-        <script src="~/lib/scripts/jquery-3.1.1.js"></script>
-        <script src="~/lib/scripts/modernizr-2.8.3.js"></script>
-        <script src="~/lib/scripts/index.js"></script>
-    </environment>
-
-    <environment names="Production">
-        <script src="~/lib/scripts/jquery-3.1.1.min.js"></script>
-        <script src="~/lib/scripts/modernizr-2.8.3.js"></script>
-        <script src="~/lib/scripts/index.js"></script>
-    </environment>
 
     <meta name="viewport" content="width=device-width" />
 </head>
 <body>
-    <header class="nav-down">
+    <header class="header">
         <ul class="tab">
             <li><a href="#" class="tablinks" onclick="openCity(event, 'tab_today')">Today</a></li>
             <li><a href="#" class="tablinks" onclick="openCity(event, 'tab_tech')">Tech</a></li>
@@ -44,6 +32,17 @@
         </section>
     </div>
 
+    <environment names="Development">
+        <script src="~/lib/scripts/jquery-3.1.1.js"></script>
+        <script async defer src="~/lib/scripts/modernizr-2.8.3.js"></script>
+        <script defer src="~/lib/scripts/index.js"></script>
+    </environment>
+
+    <environment names="Production">
+        <script src="~/lib/scripts/jquery-3.1.1.min.js"></script>
+        <script async defer src="~/lib/scripts/modernizr-2.8.3.js"></script>
+        <script defer src="~/lib/scripts/index.js"></script>
+    </environment>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

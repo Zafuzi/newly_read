@@ -246,7 +246,7 @@ function openCity(e, tabName) {
 var didScroll;
 var lastScrollTop = 0;
 var delta = 5;
-var navbarHeight = $('header').outerHeight();
+var navbarHeight = $('.header').height();
 console.log(navbarHeight);
 
 function hasScrolled() {
