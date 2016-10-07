@@ -1,3 +1,4 @@
+using System;
 using System.Web.Mvc;
 
 namespace Newly_Read{
@@ -6,6 +7,11 @@ namespace Newly_Read{
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new ErrorHandler.AiHandleErrorAttribute());
+        }
+
+        internal static void Configure(GlobalFilterCollection filters)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -11,8 +11,8 @@ namespace Newly_Read
 
         protected void Application_Start(object sender, EventArgs e)
         {
-            FilterConfig.Configure(GlobalFilters.Filters);
-            RouteConfig.Configure(RouteTable.Routes);
+            App_Start.FilterConfig.Configure(GlobalFilters.Filters);
+            App_Start.RouteConfig.Configure(RouteTable.Routes);
         }
 
         protected void Session_Start(object sender, EventArgs e)
