@@ -62,7 +62,7 @@ function openModal(uuid, tab) {
     var readableText;
 
     var currentArray = getCurrentArray(tab);
-    currentArray.map(post => {
+    currentArray.map(function(post){
         if (post.uuid === uuid) {
             readableText = post.text.replace(/\n/g, '');
             var formattedText = post.text.replace(/\n/g, "</p><p>").trim();
@@ -115,7 +115,7 @@ function displayArticles(tab) {
     var currentArray = getCurrentArray(tab);
     var currentTab = $('#' + tab);
     var articleContainer = $('<div class="post-container row">');
-    currentArray.map((post, key) => {
+    currentArray.map(function(post, key){
         if (key > 35) {
             return false;
         }
@@ -159,11 +159,11 @@ function fetchTech(url) {
     var query_url = url + ' site_category:tech';
     var myRequest = new Request(query_url, myInit);
     fetch(myRequest, myInit)
-        .then(res => {
+        .then(function(res){
             return res.json();
         })
-        .then(json => {
-            json.posts.map(post => {
+        .then(function(json){
+            json.posts.map(function(post){
                 articles.tech_articles_array.push(post);
             });
             localStorage.setItem("tech", JSON.stringify(articles.tech_articles_array));
@@ -175,11 +175,11 @@ function fetchVehicles(url) {
     var query_url = url + ' site_category:vehicles';
     var myRequest = new Request(query_url, myInit);
     fetch(myRequest, myInit)
-        .then(res => {
+        .then(function(res) {
             return res.json();
         })
-        .then(json => {
-            json.posts.map(post => {
+        .then(function(json) {
+            json.posts.map(function(post) {
                 articles.vehicles_articles_array.push(post);
             });
             localStorage.setItem("vehicles", JSON.stringify(articles.vehicles_articles_array));
@@ -191,11 +191,11 @@ function fetchToday(url) {
     var query_url = url;
     var myRequest = new Request(query_url, myInit);
     fetch(myRequest, myInit)
-        .then(res => {
+        .then(function(res) {
             return res.json();
         })
-        .then(json => {
-            json.posts.map(post => {
+        .then(function(json) {
+            json.posts.map(function(post) {
                 articles.today_articles_array.push(post);
             });
             localStorage.setItem("today", JSON.stringify(articles.today_articles_array));
