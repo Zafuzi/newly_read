@@ -29,13 +29,17 @@ $(function () {
         fetchVehicles(base_url);
     }
 
-    openCity(event, 'tab_today');
+    openCity(null, 'tab_today');
 
     $('form').submit(function (e) {
         e.preventDefault();
     });
 
-    //$("img.lazy").lazyload();
+    setTimeout(function () {
+        $('#loading').css({
+            'display': 'none'
+        });
+    }, 2000);
 });
 
 var articles = {
@@ -64,7 +68,7 @@ function openModal(uuid, tab) {
 
     var modal = $('<div class="modal col-xs-12 col-sm-6 col-md-6 col-lg-4">');
     $('body').append(
-        $('<a class="modal-close">').attr('onclick', 'closeModal("' + tab + '"); responsiveVoice.cancel();').text('X'));
+        $('<a class="modal-close">').attr('onclick', 'closeModal("' + tab + '"); responsiveVoice.cancel();').append($('<i class="material-icons">').text('keyboard_arrow_left')));
 
     var readableText;
 
@@ -121,7 +125,7 @@ function imgError(image) {
 function displayArticles(tab) {
     var currentArray = getCurrentArray(tab);
     var currentTab = $('#' + tab);
-    currentTab.html('');
+    var articleContainer = $('<div class="post-container row">');
     currentArray.map((post, key) => {
         if (key > 35) {
             return false;
@@ -139,25 +143,19 @@ function displayArticles(tab) {
             post_image.append($('<img class="lazy" original="/lib/images/default_news_icon.svg">').attr('src', '/lib/images/default_news_icon.svg'));
         }
 
-        //var formattedText = post.text.replace(/\n/g, "</p><p>").trim();
-        //var article = $('<p class="article-text">');
-        //article.append(formattedText);
-        //article.append($('<hr/>'));
-        //post_container.append(article);
-
-
         post_container.append($('<div class="post-header">').append(
             $('<p>').text(post.title)));
 
         post_container.prepend(post_image);
-        currentTab.append(post_container);
+        articleContainer.append(post_container);
     });
-
-    //console.log(articles);
+    currentTab.html(articleContainer);
 }
 
 function clearStorage() {
     localStorage.clear();
+    fetchAll();
+    location.reload();
 }
 
 function fetchAll() {
@@ -212,6 +210,7 @@ function fetchToday(url) {
                 articles.today_articles_array.push(post);
             });
             localStorage.setItem("today", JSON.stringify(articles.today_articles_array));
+            openCity(null, 'tab_today')
         });
 }
 
@@ -235,8 +234,15 @@ function openCity(e, tabName) {
     displayArticles(tabName);
     // Show the current tab, and add an "active" class to the link that opened the tab
     document.getElementById(tabName).style.display = "flex";
-    //evt.currentTarget.className += " active";
-    if (e) {
-        e.target.className += " active";
-    }
 }
+
+$(".menu").unbind('change');
+$('.menu').change(function () {
+    var option = $(this).find('option:selected');
+    var optionValue = option.val();
+    if (optionValue == "Refresh") {
+        clearStorage();
+    } else {
+        openCity(this, optionValue.toString());
+    }
+});

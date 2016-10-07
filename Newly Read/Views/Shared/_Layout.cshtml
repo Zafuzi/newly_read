@@ -10,6 +10,7 @@
 
     <link href="~/lib/css/normalize.css" rel="stylesheet" type="text/css" />
     <link href="~/lib/css/flexboxgrid.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="~/lib/css/site.css" rel="stylesheet" type="text/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
@@ -17,21 +18,19 @@
 </head>
 <body>
     <header class="header">
-        <ul class="tab">
-            <li><a href="#" class="tablinks" onclick="openCity(event, 'tab_today')">Today</a></li>
-            <li><a href="#" class="tablinks" onclick="openCity(event, 'tab_tech')">Tech</a></li>
-            <li><a href="#" class="tablinks" onclick="openCity(event, 'tab_vehicles')">Vehicles</a></li>
-            <li><a href="#" onclick="clearStorage(); location.reload();">Refresh</a></li>
-            @*<li>
-                <form action="#" onsubmit="getQuery(this)">
-                    <input type="text" name="search" class="search" />
-                    <input type="submit" class="button" value="Search"/>
-                </form>
-            </li>*@
-        </ul>
+        <select class="row tab menu">
+            <option value="tab_today" class="tablinks">Today</option>
+            <option value="tab_tech" class="tablinks">Tech</option>
+            <option value="tab_vehicles" class="tablinks">Vehicles</option>
+            <option value="Refresh" class="tablinks" onclick="clearStorage(); location.reload();">Refresh</option>
+        </select>
+        <p id="loading">Loading</p>
     </header>
 
+    
+
     <div clas="box" id="body">
+        
         @RenderSection("featured", required: false)
         <section class="row">
             @RenderBody()

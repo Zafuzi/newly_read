@@ -21,40 +21,43 @@ header {
     padding: 0;
 }
 
-    header ul {
+    header .tab {
         list-style-type: none;
         height: 100%;
-        width: 100%;
-        margin: 0;
+        width: 50%;
+        max-width: 300px;
+        margin: auto;
         padding: 0;
         display: flex;
         align-items: center;
         justify-content: center;
+        color: #FFEB3B;
+        background: #37474F;
+        outline: none;
+        border: 0px solid #fff;
     }
 
-        header ul li {
-            display: flex;
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            align-items: center;
-            justify-content: center;
-        }
+    header .menu:focus {
+        outline: none;
+    }
 
-            header ul li a {
-                height: 100%;
-                align-items: center;
-                display: flex;
-                padding: 0 25px;
-                color: white;
-            }
+    header .menu:active {
+        outline: none;
+    }
 
-            header ul li .active {
-                color: #FFEB3B;
-            }
-.search{
+    header .tab option {
+        display: flex;
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+    }
+
+.search {
     color: #1e1e1e;
 }
+
 .modal {
     line-height: 2rem;
     font-size: 1rem;
@@ -64,10 +67,11 @@ header {
 .modal-close {
     position: fixed;
     top: 75px;
-    right: 10px;
+    right: 75px;
     border-radius: 50%;
+    color: #fff;
     font-size: 1.5rem;
-    background: #f5f5f5;
+    background: #1e1e1e;
     height: 2.1rem;
     width: 2.1rem;
     display: flex;
@@ -96,6 +100,27 @@ a {
     display: flex;
 }
 
+#loading{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    width: 200px;
+    height: auto;
+    padding: 25px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    background: #1e1e1e;
+    color: #fff;
+}
+.post-container{
+    align-self: center;
+    justify-content: center;
+    margin: auto;
+    display: flex;
+}
 .post {
     display: flex;
     flex-direction: column;
@@ -152,4 +177,11 @@ a {
     align-self: center;
     flex-flow: row wrap;
     flex-grow: 1;
+}
+
+@media (max-width: 48em){
+    .modal-close{
+        top: 7px;
+        right: 10px;
+    }
 }
