@@ -182,7 +182,10 @@
     <Content Include="lib\css\flexboxgrid.min.css" />
     <Content Include="lib\css\normalize.css" />
     <Content Include="lib\css\site.css" />
+    <Content Include="lib\images\default_news_icon.svg" />
     <Content Include="lib\scripts\index.js" />
+    <Content Include="lib\scripts\jquery.lazyload.js" />
+    <Content Include="lib\scripts\jquery.lazyload.min.js" />
     <Content Include="lib\scripts\modernizr-2.8.3.js" />
     <Content Include="packages.config" />
     <Content Include="lib\scripts\ai.0.22.19-build00125.js" />

@@ -11,7 +11,8 @@
         }
     }, 500);
 
-    
+    $("img.lazy").lazyload();
+
     if (localStorage.getItem('today') && localStorage.getItem('tech') && localStorage.getItem('vehicles')) {
         articles.today_articles_array = JSON.parse(localStorage.getItem('today'));
         articles.tech_articles_array = JSON.parse(localStorage.getItem('tech'));
@@ -24,8 +25,6 @@
             fetchAll();
         }, 120000);
     }
-
-    
 });
 
 var articles = {
@@ -49,7 +48,7 @@ function getQuery(form) {
 function openModal(uuid, tab) {
     var tag = $('#' + uuid);
 
-    var modal = $('<div class="modal">');
+    var modal = $('<div class="modal col-xs-12 col-lg-6">');
     $('body').append(
         $('<a class="modal-close">').attr('onclick', 'closeModal("' + tab + '")').text('X'));
 
@@ -101,6 +100,12 @@ function closeModal(tab) {
     displayArticles(tab);
 }
 
+
+function imgError(image) {
+    $(image).attr('src', '/lib/images/default_news_icon.svg');
+    $(image).onerror = null;
+    return;
+}
 function displayArticles(tab) {
     var currentArray = getCurrentArray(tab);
     var currentTab = $('#' + tab);
@@ -108,18 +113,16 @@ function displayArticles(tab) {
 
     currentArray.map((post, key) => {
 
-        var post_container = $('<div class="post">').attr('onclick', 'openModal("' + post.uuid + '","' + tab + '")').attr('id', post.uuid);
-
-        
+        var post_container = $('<div class="post col-xs-12 col-sm-6 col-md-4 col-lg-3">').attr('onclick', 'openModal("' + post.uuid + '","' + tab + '")').attr('id', post.uuid);
 
         var post_image = $('<div class="post-image">');
         if (post.thread.main_image !== null) {
             var imgUrl = post.thread.main_image;
-            post_image.append($('<img class="small-item left">').attr('src', imgUrl));
+            post_image.append($('<img class="lazy" onerror="imgError(this)">').attr('src', imgUrl));
         } else {
-            post_image.append($('<img class="small-item left">').attr('src', 'https://unsplash.it/400/200/?random'));
+            post_image.append($('<img class="lazy" original="/lib/images/default_news_icon.svg">').attr('src', '/lib/images/default_news_icon.svg'));
         }
-        
+
         //var formattedText = post.text.replace(/\n/g, "</p><p>").trim();
         //var article = $('<p class="article-text">');
         //article.append(formattedText);
@@ -210,7 +213,6 @@ function fetchToday(url, myInit) {
             localStorage.setItem("today", JSON.stringify(articles.today_articles_array));
         });
 }
-
 
 function openCity(e, tabName) {
     // Declare all variables

@@ -25,9 +25,9 @@
         </ul>
     </header>
 
-    <div id="body">
+    <div clas="box" id="body">
         @RenderSection("featured", required: false)
-        <section class="content-wrapper main-content clear-fix">
+        <section class="row">
             @RenderBody()
         </section>
     </div>
@@ -35,12 +35,14 @@
     <environment names="Development">
         <script src="~/lib/scripts/jquery-3.1.1.js"></script>
         <script async defer src="~/lib/scripts/modernizr-2.8.3.js"></script>
+        <script async defer src="~/lib/scripts/jquery.lazyload.js"></script>
         <script defer src="~/lib/scripts/index.js"></script>
     </environment>
 
     <environment names="Production">
         <script src="~/lib/scripts/jquery-3.1.1.min.js"></script>
         <script async defer src="~/lib/scripts/modernizr-2.8.3.js"></script>
+        <script async defer src="~/lib/scripts/jquery.lazyload.min.js"></script>
         <script defer src="~/lib/scripts/index.js"></script>
     </environment>
     @RenderSection("Scripts", required: false)
