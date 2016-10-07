@@ -15,6 +15,7 @@
         <capabilities>
             <capability name="browser" value="My New Browser" />
             <capability name="version" value="${version}" />
+            <capability name="cookies" value="true"/>
         </capabilities>
     </browser>
 
