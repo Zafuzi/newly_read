@@ -187,6 +187,7 @@
     <Content Include="lib\scripts\jquery.lazyload.js" />
     <Content Include="lib\scripts\jquery.lazyload.min.js" />
     <Content Include="lib\scripts\modernizr-2.8.3.js" />
+    <Content Include="lib\scripts\responsiveVoice.js" />
     <Content Include="packages.config" />
     <Content Include="lib\scripts\ai.0.22.19-build00125.js" />
     <Content Include="lib\scripts\ai.0.22.19-build00125.min.js" />

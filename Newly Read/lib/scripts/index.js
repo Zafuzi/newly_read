@@ -63,7 +63,7 @@ function openModal(uuid, tab) {
 
     var modal = $('<div class="modal col-xs-12 col-sm-6 col-md-6 col-lg-4">');
     $('body').append(
-        $('<a class="modal-close">').attr('onclick', 'closeModal("' + tab + '")').text('X'));
+        $('<a class="modal-close">').attr('onclick', 'closeModal("' + tab + '"); responsiveVoice.cancel();').text('X'));
 
     var readableText;
 
@@ -78,14 +78,12 @@ function openModal(uuid, tab) {
         }
     });
 
-    /*$('.tab').append($('<input class="button voice-button" type="button" value="play">').click(function () {
-        responsiveVoice.speak(readableText, 'US English Female');
-    }));
-
-    $('.tab').append($('<input class="button voice-button" type="button" value="stop">').click(function () {
+    $(modal).prepend($('<input class="button voice-button" type="button" value="stop">').click(function () {
         responsiveVoice.cancel();
     }));
-    */
+    $(modal).prepend($('<input class="button voice-button" type="button" value="play">').click(function () {
+        responsiveVoice.speak(readableText, 'US English Female');
+    }));
 
     $('#' + tab).html(modal);
     $('#' + tab).prepend(tag);
@@ -219,6 +217,7 @@ function fetchToday(url) {
 function openCity(e, tabName) {
     // Declare all variables
     var i, tabcontent, tablinks;
+    responsiveVoice.cancel();
 
     // Get all elements with class="tabcontent" and hide them
     tabcontent = document.getElementsByClassName("tabcontent");
