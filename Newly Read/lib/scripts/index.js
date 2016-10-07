@@ -10,6 +10,7 @@ var myInit = {
 var base_url = "https://webhose.io/search?token=ac283902-3c83-4eb5-baf3-8108376e137e&q=language:(english)%20performance_score:>3%20(site_type:news%20OR%20site_type:blogs)%20";
 
 $(function () {
+    responsiveVoice.cancel();
     if (localStorage.getItem('today')) {
         articles.today_articles_array = JSON.parse(localStorage.getItem('today'));
     } else {
