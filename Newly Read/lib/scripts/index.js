@@ -1,30 +1,40 @@
-﻿$(function () {
+﻿var myHeaders = new Headers();
+myHeaders.append('Content-Type', 'application/json');
+var myInit = {
+    method: 'GET',
+    headers: myHeaders,
+    mode: 'cors',
+    cache: 'default'
+};
 
-    $(window).scroll(function (e) {
-        didScroll = true;
+var base_url = "https://webhose.io/search?token=ac283902-3c83-4eb5-baf3-8108376e137e&q=language:(english)%20performance_score:>3%20(site_type:news%20OR%20site_type:blogs)%20";
+
+$(function () {
+    if (localStorage.getItem('today')) {
+        articles.today_articles_array = JSON.parse(localStorage.getItem('today'));
+    } else {
+        fetchToday(base_url);
+    }
+
+    if (localStorage.getItem('tech')) {
+        articles.tech_articles_array = JSON.parse(localStorage.getItem('tech'));
+    } else {
+        fetchTech(base_url);
+    }
+
+    if (localStorage.getItem('vehicles')) {
+        articles.vehicles_articles_array = JSON.parse(localStorage.getItem('vehicles'));
+    } else {
+        fetchVehicles(base_url);
+    }
+
+    openCity(event, 'tab_today');
+
+    $('form').submit(function (e) {
+        e.preventDefault();
     });
 
-    setInterval(function () {
-        if (didScroll) {
-            hasScrolled();
-            didScroll = false;
-        }
-    }, 500);
-
-    $("img.lazy").lazyload();
-
-    if (localStorage.getItem('today') && localStorage.getItem('tech') && localStorage.getItem('vehicles')) {
-        articles.today_articles_array = JSON.parse(localStorage.getItem('today'));
-        articles.tech_articles_array = JSON.parse(localStorage.getItem('tech'));
-        articles.sports_articles_array = JSON.parse(localStorage.getItem('vehicles'));
-        openCity(event, 'tab_today');
-    } else {
-        fetchAll();
-        openCity(event, 'tab_today');
-        setInterval(function () {
-            fetchAll();
-        }, 120000);
-    }
+    //$("img.lazy").lazyload();
 });
 
 var articles = {
@@ -33,22 +43,25 @@ var articles = {
     vehicles_articles_array: []
 };
 
-function getQuery(form) {
+function getQuery(form, e) {
     var data = $(form).serializeArray();
     var query;
-    $('.webpages').html('');
+    localStorage.removeItem('today');
+    $('#tab_today').html('');
     data.map(obj => {
         if (obj.name === "search") {
             query = obj;
         }
     });
-    fetchToday(query);
+    fetchToday(base_url + query);
+    articles.today_articles_array = JSON.parse(localStorage.getItem('today'));
+    displayArticles('tab_today');
 }
 
 function openModal(uuid, tab) {
     var tag = $('#' + uuid);
 
-    var modal = $('<div class="modal col-xs-12 col-lg-6">');
+    var modal = $('<div class="modal col-xs-12 col-sm-6 col-md-6 col-lg-4">');
     $('body').append(
         $('<a class="modal-close">').attr('onclick', 'closeModal("' + tab + '")').text('X'));
 
@@ -86,7 +99,7 @@ function getCurrentArray(tab) {
     switch (tab) {
         case 'tab_today': currentArray = articles.today_articles_array; break;
         case 'tab_tech': currentArray = articles.tech_articles_array; break;
-        case 'tab_vehicles': currentArray = articles.sports_articles_array; break;
+        case 'tab_vehicles': currentArray = articles.vehicles_articles_array; break;
         case 'default': console.log('ERROR: You seem to be looking for a page that is nonexistent.', tab);
     }
     return currentArray;
@@ -100,19 +113,23 @@ function closeModal(tab) {
     displayArticles(tab);
 }
 
-
 function imgError(image) {
     $(image).attr('src', '/lib/images/default_news_icon.svg');
     $(image).onerror = null;
     return;
 }
+
 function displayArticles(tab) {
     var currentArray = getCurrentArray(tab);
     var currentTab = $('#' + tab);
     currentTab.html('');
-
     currentArray.map((post, key) => {
-
+        if (key > 35) {
+            return false;
+        }
+        if (!post) {
+            return false;
+        }
         var post_container = $('<div class="post col-xs-12 col-sm-6 col-md-4 col-lg-3">').attr('onclick', 'openModal("' + post.uuid + '","' + tab + '")').attr('id', post.uuid);
 
         var post_image = $('<div class="post-image">');
@@ -135,11 +152,6 @@ function displayArticles(tab) {
 
         post_container.prepend(post_image);
         currentTab.append(post_container);
-
-        if (key % 25 === 0 && key > 0) {
-            currentTab.append($('<div class="quote">')
-                .append($('<p>').text('Inspirational Quotes here')));
-        }
     });
 
     //console.log(articles);
@@ -148,30 +160,16 @@ function displayArticles(tab) {
 function clearStorage() {
     localStorage.clear();
 }
+
 function fetchAll() {
     localStorage.clear();
-    articles.today_article_array = [];
-    articles.tech_articles_array = [];
-    articles.sports_articles_array = [];
-
-    var myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/json');
-    var myInit = {
-        method: 'GET',
-        headers: myHeaders,
-        mode: 'cors',
-        cache: 'default'
-    };
-
-    var base_url = 'https://webhose.io/';
-    var param = 'search?token=ac283902-3c83-4eb5-baf3-8108376e137e&q=language:(english) performance_score:>3';
-
-    fetchToday(base_url + param, myInit);
-    fetchTech(base_url + param, myInit);
-    fetchSports(base_url + param, myInit);
+    fetchToday(base_url);
+    fetchTech(base_url);
+    fetchVehicles(base_url);
 }
 
-function fetchTech(url, myInit) {
+function fetchTech(url) {
+    articles.tech_articles_array = [];
     var query_url = url + ' site_category:tech';
     var myRequest = new Request(query_url, myInit);
     fetch(myRequest, myInit)
@@ -185,7 +183,9 @@ function fetchTech(url, myInit) {
             localStorage.setItem("tech", JSON.stringify(articles.tech_articles_array));
         });
 }
-function fetchSports(url, myInit) {
+
+function fetchVehicles(url) {
+    articles.Vehicles_articles_array = [];
     var query_url = url + ' site_category:vehicles';
     var myRequest = new Request(query_url, myInit);
     fetch(myRequest, myInit)
@@ -199,7 +199,9 @@ function fetchSports(url, myInit) {
             localStorage.setItem("vehicles", JSON.stringify(articles.vehicles_articles_array));
         });
 }
-function fetchToday(url, myInit) {
+
+function fetchToday(url) {
+    articles.today_article_array = [];
     var query_url = url;
     var myRequest = new Request(query_url, myInit);
     fetch(myRequest, myInit)
@@ -237,31 +239,4 @@ function openCity(e, tabName) {
     if (e) {
         e.target.className += " active";
     }
-}
-
-// Hide Header on on scroll down
-var didScroll;
-var lastScrollTop = 0;
-var delta = 5;
-var navbarHeight = $('.header').height();
-
-function hasScrolled() {
-    var st = $(window).scrollTop();
-    // Make sure they scroll more than delta
-    if (Math.abs(lastScrollTop - st) <= delta)
-        return;
-
-    // If they scrolled down and are past the navbar, add class .nav-up.
-    // This is necessary so you never see what is "behind" the navbar.
-    if (st > lastScrollTop && st > navbarHeight) {
-        // Scroll Down
-        $('header').removeClass('nav-down').addClass('nav-up');
-    } else {
-        // Scroll Up
-        if (st + $(window).height() < $(document).height()) {
-            $('header').removeClass('nav-up').addClass('nav-down');
-        }
-    }
-
-    lastScrollTop = st;
 }

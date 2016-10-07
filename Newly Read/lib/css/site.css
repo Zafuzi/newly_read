@@ -10,11 +10,6 @@ body, html {
     box-sizing: border-box;
 }
 
-img {
-    -webkit-animation: fadeEffect .5s;
-    animation: fadeEffect .5s; /* Fading effect takes 1 second */
-}
-
 header {
     background: #37474F;
     color: white;
@@ -57,13 +52,13 @@ header {
             header ul li .active {
                 color: #FFEB3B;
             }
-
+.search{
+    color: #1e1e1e;
+}
 .modal {
     line-height: 2rem;
     font-size: 1rem;
     color: #252525;
-    -webkit-animation: fadeEffect 1s;
-    animation: fadeEffect 1s; /* Fading effect takes 1 second */
 }
 
 .modal-close {
@@ -79,8 +74,6 @@ header {
     align-items: center;
     justify-content: center;
     padding: 3px;
-    -webkit-animation: fadeEffect 1s;
-    animation: fadeEffect 1s; /* Fading effect takes 1 second */
 }
 
 .nav-up {
@@ -158,27 +151,5 @@ a {
     justify-content: center;
     align-self: center;
     flex-flow: row wrap;
-    flex-grow: .5;
-    -webkit-animation: fadeEffect 1s;
-    animation: fadeEffect 1s; /* Fading effect takes 1 second */
-}
-
-@-webkit-keyframes fadeEffect {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes fadeEffect {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
+    flex-grow: 1;
 }
