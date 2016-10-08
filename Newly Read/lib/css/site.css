@@ -128,6 +128,16 @@ header {
     display: flex;
     flex-flow: row wrap;
 }
+.source-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    cursor: pointer;
+}
+source-header-tag{
+    width: 100%;
+}
 .source-container hr{
     flex-basis: 1;
     width: 100%;

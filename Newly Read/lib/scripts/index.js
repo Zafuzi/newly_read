@@ -52,28 +52,44 @@ function getSourcesForCategory(category) {
     currentSource.map(function (source) {
         $.get('https://newsapi.org/v1/articles?apiKey=' + apiKey + '&source=' + source.id)
         .done(function (res) {
+            //console.log(res);
+            //Container for each sources articles
             var source_container = $('<div class="source-container">');
-            source_container.append($('<h3>').text(source.id)).append($('<hr/>'));
+                // Source header and collapse button
+                var source_header = $('<div class="source-header" onclick="closeSource(this)">');
+                    var source_header_tag = $('<h3 class="source-header-tag">').text(source.id);
+                    var source_header_collapse = $('<i class="material-icons">').text('keyboard_arrow_down');
+                source_header.append(source_header_tag).append(source_header_collapse);
+            source_container.append(source_header).append($('<hr/>'));
 
             res.articles.map(function (article) {
                 var article_container = $('<div class="post-container">');
-                var article_card = $('<div class="post card-square">');
+                    var article_card = $('<div class="post card-square">');
+                    article_card.append($('<a class="post-header" target="_blank">').attr('href', article.url).text(article.title).append($('<br/>')).append($('<span>').text(article.author)));
 
-                article_card.append($('<p class="post-header">').text(article.title + '\n by: ' + article.author));
-
-                if (article.urlToImage != null) {
-                    article_card.prepend($('<img data-failover="/lib/images/default_news_icon.svg" onerror="imgFailover(this)">').attr('src', article.urlToImage));
-                } else {
-                    article_card.prepend($('<img src="/lib/images/default_news_icon.svg">'));
-                }
+                    if (article.urlToImage != null) {
+                        article_card.prepend($('<img data-failover="/lib/images/default_news_icon.svg" onerror="imgFailover(this)">').attr('src', article.urlToImage));
+                    } else {
+                        article_card.prepend($('<img src="/lib/images/default_news_icon.svg">'));
+                    }
                 article_container.append(article_card);
                 source_container.append(article_container);
 
                 $('.featured').append(source_container);
-                $('.featured').append($('<hr/>'));
             });
         });
     });
+}
+
+function openArticle(article) {
+    console.log(article);
+}
+
+function closeSource(source) {
+    console.log(source);
+    var parent = source.parentElement;
+    console.log(parent);
+    $(parent).find('.post-container').slideToggle(500);
 }
 
 function imgFailover(img) {
