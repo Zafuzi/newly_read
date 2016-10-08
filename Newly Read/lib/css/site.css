@@ -6,7 +6,7 @@ body, html {
     padding: 0;
     overflow-x: hidden;
     line-height: 1.2rem;
-    background: #fff;
+    background: #f1f1f1;
     box-sizing: border-box;
 }
 
@@ -20,38 +20,68 @@ header {
     background: #37474F;
     color: white;
     height: 51px;
-    position: fixed;
+    display: flex;
     top: 0;
     transition: top 0.2s ease-in-out;
     width: 100%;
     padding: 0;
 }
 
-    .tab {
-        list-style-type: none;
-        display: inline-flex;
-        width: 100vw;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        text-align: center;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        z-index: 99;
+header {
+    list-style-type: none;
+    display: inline-flex;
+    width: 100vw;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    z-index: 99;
+}
+
+    header li {
+        display: inline-block;
+        margin: 10px;
     }
 
-        .tab li {
-            display: inline-block;
-            margin: 10px;
-        }
+    header ul li a {
+        height: 100%;
+        padding: 25px;
+        display: block;
+        color: #fff !important;
+    }
 
-            .tab ul li a {
-                height: 100%;
-                padding: 25px;
-                display: block;
-                color: #fff !important;
-            }
+.card {
+    box-shadow: .1em .1em .15em #f5f5f5;
+    border-radius: 3px;
+    background: #fff;
+    padding: 25px;
+    display: flex;
+    width: 100%;
+    height: auto;
+    margin: 10px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #f6f6f6;
+}
+
+.card-square {
+    width: 100px;
+    height: 50px;
+    padding: 10px;
+    display: flex;
+    align-self: stretch;
+    align-items: center;
+    justify-content: center;
+}
+
+.hover:hover {
+    cursor: pointer;
+    background: #fefefe;
+    color: #ee411a;
+}
 
 .modal {
     line-height: 2rem;
@@ -81,33 +111,30 @@ header {
 
 
 /*On the flex container*/
-.flexcontainer {
+.featured {
     position: relative;
     margin-left: auto;
     margin-right: auto;
-    width: 85%;
+    width: 50vw;
     min-height: 100%;
     display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
+    justify-content: space-between;
 }
 
-#loading {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate3d(-50%, -50%, 0);
-    width: 200px;
-    height: auto;
-    padding: 25px;
+.source-container {
+    margin-top: 45px;
     display: flex;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    background: #1e1e1e;
-    color: #fff;
+    flex-flow: row wrap;
+}
+.source-container hr{
+    flex-basis: 1;
+    width: 100%;
 }
 
 .post-container {
-    align-self: center;
+    align-items: center;
     justify-content: center;
     margin: auto;
     display: flex;
@@ -133,7 +160,8 @@ header {
     .post .post-header {
         align-self: flex-start;
         flex-basis: 1;
-        bottom: 0;
+        font-size: 1.5rem;
+        line-height: 2rem;
     }
 
 .quote {

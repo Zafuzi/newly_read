@@ -17,33 +17,26 @@
     <meta name="viewport" content="width=device-width" />
 </head>
 <body>
-    <header class="header">
-        <ul class="row tab">
-            <li value="tab_today" class="tablinks">
-                <a onclick="openCity(this, 'tab_today');">Today</a>
-            </li>
-            <li value="tab_tech" class="tablinks">
-                <a onclick="openCity(this, 'tab_tech');">Tech</a>
-            </li>
-            <li value="tab_vehicles" class="tablinks">
-                <a onclick="openCity(this, 'tab_vehicles');">Vehicles</a>
-            </li>
-            <li value="Refresh" class="tablinks">
-                <a onclick="clearStorage();"><i class="material-icons">refresh</i></a>
-            </li>
+    <header class="header row">
+        <ul>
+            <li><a href="~/">Home</a></li>
+            <li><a onclick="getSourcesForCategory('business')">Business</a></li>
+            <li><a onclick="getSourcesForCategory('entertainment')">Entertainment</a></li>
+            <li><a onclick="getSourcesForCategory('gaming')">Gaming</a></li>
+            <li><a onclick="getSourcesForCategory('general')">General</a></li>
+            <li><a onclick="getSourcesForCategory('music')">Music</a></li>
+            <li><a onclick="getSourcesForCategory('science')">Science</a></li>
+            <li><a onclick="getSourcesForCategory('sport')">Sports</a></li>
+            <li><a onclick="getSourcesForCategory('technology')">Technology</a></li>
         </ul>
-        <p id="loading">Loading</p>
     </header>
 
-    
-
-    <div clas="box" id="body">
-        
+    <main>
         @RenderSection("featured", required: false)
-        <section class="row">
+        <section class="featured">
             @RenderBody()
         </section>
-    </div>
+    </main>
 
     <environment names="Development">
         <script src="~/lib/scripts/jquery-3.1.1.js"></script>
@@ -53,13 +46,13 @@
         <script defer src="~/lib/scripts/index.js"></script>
     </environment>
 
-    <environment names="Production">
+    <!--<environment names="Production">
         <script src="~/lib/scripts/jquery-3.1.1.min.js"></script>
         <script async defer src="~/lib/scripts/modernizr-2.8.3.js"></script>
         <script async defer src="~/lib/scripts/jquery.lazyload.min.js"></script>
         <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
         <script defer src="~/lib/scripts/index.js"></script>
-    </environment>
+    </environment>-->
     @RenderSection("Scripts", required: false)
 </body>
 </html>
