@@ -3,6 +3,7 @@
     $('img[data-failover]').on('error', function () {
 
     });
+    getWikis();
 });
 var apiKey = 'ccfdc66609fc4b7b87258020b85d4380';
 var sources = {
@@ -97,4 +98,52 @@ function imgFailover(img) {
     if (img.src != failover) {
         img.src = failover;
     }
+}
+
+function display(item) {
+    var item_container = $('<div class="post-container">');
+    item_container.append(
+        $('<a href="Home/Article/?id=' + item.guid + '">').text(item.title)
+    );
+    var string = $.parseHTML(item.description);
+    string.map((node, key) => {
+        if (node.nodeName == "A") {
+            string[key] = '';
+        }
+    })
+    item_container.append($('<p>').append(string));
+    $('.featured').append(item_container);
+}
+function getArticle(source) {
+    var url = $(source).attr('id');
+    fetch('http://api.embed.ly/1/extract?key=08ad220089e14298a88f0810a73ce70a&url=' + url)
+    .then(res => {
+        return res.json();
+    })
+    .then(json => {
+        console.log(json);
+        var article_container = $('<div class="post_container card">');
+        article_container.append(json.content);
+        $('.featured').html(article_container);
+    });
+    console.log(url);
+}
+
+var superFeedrApiKey = 'f500f82c2dc5c5d6814518fbe1f90c6d';
+function getWikis() {
+    var rss2json = 'http://rss2json.com/api.json?rss_url=';
+    var rss = ['http://rss.nytimes.com/services/xml/rss/nyt/Technology.xml', 'https://www.wired.com/feed', '	http://feeds.bbci.co.uk/news/world/rss.xml'];
+    rss.map(function (url) {
+        fetch(rss2json + url).then(res => { 
+            return res.json();
+        })
+        .then(json => {
+            console.log(json);
+            $('.featured').append('<hr/>');
+            json.items.map(item => {
+                display(item);
+            });
+            
+        })
+    })
 }

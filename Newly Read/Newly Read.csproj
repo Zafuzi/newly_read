@@ -230,6 +230,7 @@
     <Content Include="Service References\Application Insights\ConnectedService.json" />
     <Content Include="lib\scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="lib\scripts\jquery-3.1.1.min.map" />
+    <Content Include="Views\Home\Article.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

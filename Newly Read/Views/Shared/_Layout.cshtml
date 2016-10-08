@@ -17,20 +17,19 @@
     <meta name="viewport" content="width=device-width" />
 </head>
 <body>
-    <header class="header row">
+    <header>
         <ul>
             <li><a href="~/">Home</a></li>
-            <li><a onclick="getSourcesForCategory('business')">Business</a></li>
-            <li><a onclick="getSourcesForCategory('entertainment')">Entertainment</a></li>
-            <li><a onclick="getSourcesForCategory('gaming')">Gaming</a></li>
-            <li><a onclick="getSourcesForCategory('general')">General</a></li>
-            <li><a onclick="getSourcesForCategory('music')">Music</a></li>
-            <li><a onclick="getSourcesForCategory('science')">Science</a></li>
-            <li><a onclick="getSourcesForCategory('sport')">Sports</a></li>
-            <li><a onclick="getSourcesForCategory('technology')">Technology</a></li>
+            <li><a href="~/">About</a></li>
+            <li><a href="~/">Contact</a></li>
         </ul>
     </header>
 
+
+    <environment names="Development">
+        <script src="~/lib/scripts/jquery-3.1.1.js"></script>
+        <script async defer src="~/lib/scripts/modernizr-2.8.3.js"></script>
+    </environment>
     <main>
         @RenderSection("featured", required: false)
         <section class="featured">
@@ -38,13 +37,7 @@
         </section>
     </main>
 
-    <environment names="Development">
-        <script src="~/lib/scripts/jquery-3.1.1.js"></script>
-        <script async defer src="~/lib/scripts/modernizr-2.8.3.js"></script>
-        <script async defer src="~/lib/scripts/jquery.lazyload.js"></script>
-        <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
-        <script defer src="~/lib/scripts/index.js"></script>
-    </environment>
+    
 
     <!--<environment names="Production">
         <script src="~/lib/scripts/jquery-3.1.1.min.js"></script>
@@ -53,6 +46,8 @@
         <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
         <script defer src="~/lib/scripts/index.js"></script>
     </environment>-->
+
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>

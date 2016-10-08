@@ -9,5 +9,13 @@ namespace Newly_Read.Controllers
         {
             return View();
         }
+
+        public ActionResult Article(string id)
+        {
+
+            ViewBag.UrlMasterID = id;
+            ViewBag.Url = "Home/Article";
+            return View();
+        }
     }
 }

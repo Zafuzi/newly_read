@@ -1,0 +1,48 @@
+﻿@{
+    var url = ViewBag.UrlMasterId;
+}
+
+<div class="row" id="back-btn">
+    <a href="javascript:history.back()">
+        <i class="material-icons">arrow_back</i>
+    </a>
+</div>
+
+<div class="featured-article"></div>
+<script type="text/javascript">
+    $(function () {
+        getArticle();
+    });
+    function getArticle() {
+        var url = '@url';
+        console.log(url);
+        fetch('http://api.embed.ly/1/extract?key=08ad220089e14298a88f0810a73ce70a&url=' + url)
+        .then(res => {
+            return res.json();
+        })
+        .then(json => {
+            console.log(json);
+            var article_container = $('<div class="article-container">');
+
+            var article_title = $('<div>');
+            article_title.append($('<h3>').text(json.title));
+
+            var article_authors = $('<p>').text('Written by: ');
+            json.authors.map(author => {
+                article_authors.append($('<span>').text(author.name));
+            })
+
+            article_title.append(article_authors);
+
+
+            var attribution_header = $('<div>');
+            attribution_header.append('<p>').text('This article was originally published by: ');
+            attribution_header.append($('<a>').text(json.provider_display).attr('href', url));
+
+            article_container.append(article_title);
+            article_container.append(attribution_header);
+            article_container.append(json.content);
+            $('.featured-article').html(article_container);
+        });
+    }
+</script>
