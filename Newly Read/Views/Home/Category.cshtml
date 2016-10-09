@@ -1,0 +1,14 @@
+﻿@{
+    var category = ViewBag.UrlMasterID;
+}
+
+
+@section featured{
+    <div class="featured"></div>
+    <script defer type="text/javascript">
+        setTimeout(function () {
+            console.log(sources);
+            getSourcesForCategory('@category');
+        }, 500);
+    </script>
+}

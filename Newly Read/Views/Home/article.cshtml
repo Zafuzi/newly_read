@@ -1,21 +1,23 @@
 ﻿@{
-    var url = ViewBag.UrlMasterId;
+    var url = ViewBag.UrlMasterID;
 }
 
-<div class="row" id="back-btn">
-    <a href="javascript:history.back()">
-        <i class="material-icons">arrow_back</i>
-    </a>
-</div>
 
-<div class="featured-article"></div>
+@section featured{
+    <div class="row" id="back-btn">
+        <a href="javascript:history.back()">
+            <i class="material-icons">arrow_back</i>
+        </a>
+    </div>
+    <div class="featured"></div>
+}
+
 <script type="text/javascript">
     $(function () {
         getArticle();
     });
     function getArticle() {
         var url = '@url';
-        console.log(url);
         fetch('http://api.embed.ly/1/extract?key=08ad220089e14298a88f0810a73ce70a&url=' + url)
         .then(res => {
             return res.json();
@@ -42,7 +44,7 @@
             article_container.append(article_title);
             article_container.append(attribution_header);
             article_container.append(json.content);
-            $('.featured-article').html(article_container);
+            $('.featured').html(article_container);
         });
     }
 </script>

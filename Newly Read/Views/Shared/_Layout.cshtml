@@ -11,6 +11,7 @@
     <link href="~/lib/css/normalize.css" rel="stylesheet" type="text/css" />
     <link href="~/lib/css/flexboxgrid.min.css" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <link href="~/lib/css/site.css" rel="stylesheet" type="text/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
@@ -18,26 +19,35 @@
 </head>
 <body>
     <header>
-        <ul>
-            <li><a href="~/">Home</a></li>
-            <li><a href="~/">About</a></li>
-            <li><a href="~/">Contact</a></li>
-        </ul>
+        <nav id="top_nav">
+            <ul>
+                <li class="push-right"><a href="~/">Newly Read</a></li>
+                <li class="float-right"><a href="~/Account/Login">Login</a></li>
+                <li class="float-right"><a href="~/Account/Register">Register</a></li>
+            </ul>
+        </nav>
+        <nav id="categories">
+            <ul>
+                <li><a href="~/Home/Category/?id=business">Business</a></li>
+                <li><a href="~/Home/Category/?id=technology">Technology</a></li>
+                <li><a href="~/Home/Category/?id=general">General</a></li>
+                <li><a href="~/Home/Category/?id=sport">Sports</a></li>
+            </ul>
+        </nav>
     </header>
-
 
     <environment names="Development">
         <script src="~/lib/scripts/jquery-3.1.1.js"></script>
-        <script async defer src="~/lib/scripts/modernizr-2.8.3.js"></script>
+        <script src="~/lib/scripts/modernizr-2.8.3.js"></script>
+        <script src="~/lib/scripts/index.js"></script>
     </environment>
     <main>
+        
         @RenderSection("featured", required: false)
-        <section class="featured">
+        <section>
             @RenderBody()
         </section>
     </main>
-
-    
 
     <!--<environment names="Production">
         <script src="~/lib/scripts/jquery-3.1.1.min.js"></script>
@@ -46,7 +56,6 @@
         <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
         <script defer src="~/lib/scripts/index.js"></script>
     </environment>-->
-
 
     @RenderSection("Scripts", required: false)
 </body>

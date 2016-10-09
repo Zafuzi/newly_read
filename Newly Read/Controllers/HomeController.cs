@@ -10,11 +10,15 @@ namespace Newly_Read.Controllers
             return View();
         }
 
+        public ActionResult Category(string id)
+        {
+            ViewBag.UrlMasterID = id;
+            return View();
+        }
+
         public ActionResult Article(string id)
         {
-
             ViewBag.UrlMasterID = id;
-            ViewBag.Url = "Home/Article";
             return View();
         }
     }
