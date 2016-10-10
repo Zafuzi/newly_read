@@ -22,8 +22,14 @@
         <nav id="top_nav">
             <ul>
                 <li class="push-right"><a href="~/">Newly Read</a></li>
-                <li class="float-right"><a href="~/Account/Login">Login</a></li>
-                <li class="float-right"><a href="~/Account/Register">Register</a></li>
+                @if (User.Identity.IsAuthenticated) {
+                    <li class="float-right"><a href="~/">@Context.User.Identity.Name</a></li>
+                    <li class="float-right">@Html.ActionLink("Log Out", "IdentitySignout", "Account")</li>
+                } else {
+                    <li class="float-right"><a href="~/Account/Login">Login</a></li>
+                    <li class="float-right"><a href="~/Account/Register">Register</a></li>
+                }
+                
             </ul>
         </nav>
         <nav id="categories">
@@ -42,7 +48,7 @@
         <script src="~/lib/scripts/index.js"></script>
     </environment>
     <main>
-        
+
         @RenderSection("featured", required: false)
         <section>
             @RenderBody()

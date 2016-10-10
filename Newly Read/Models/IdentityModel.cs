@@ -9,16 +9,13 @@ namespace Newly_Read.Models
 {
     public class IdentityModel
     {
-        public class ApplicationUser : IdentityUser
-
-        {
-
-            //You can extend this class by adding additional fields like Birthday
-
+        public class ApplicationUser : IdentityUser {
+            internal string email;
+            internal string firstName;
         }
         public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
         {
-            public ApplicationDbContext() : base("MyConnectionString")
+            public ApplicationDbContext() : base("DefaultConnection")
             {
             }
         }

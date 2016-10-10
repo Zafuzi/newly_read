@@ -54,20 +54,38 @@ function getSourcesForCategory(category) {
     }
     currentSource.map(function (source) {
         console.log(source);
-        $.get('https://newsapi.org/v1/articles?apiKey=' + apiKey + '&source=' + source.id)
+        $.get('https://newsapi.org/v1/articles?sortBy=latest&apiKey=' + apiKey + '&source=' + source.id)
         .done(function (res) {
-            console.log(res);
-            res.articles.map(function (item) {
-                var item_container = $('<div class="post-container">');
-                item_container.append($('<img>').attr('src', item.urlToImage));
+            res.articles.map(function (item, key) {
+                var item_container;
+                item_container = $('<div class="post-container">');
+                item_container.click(function () {
+                    window.location.replace("../Article/?id=" + item.url);
+                });
+
+                if (!item.urlToImage) {
+                    item_container.append($('<img>').attr('src', '../../lib/images/default_news_icon.svg'));
+                } else {
+                    item_container.append($('<img onerror="imgError(this)">').attr('src', item.urlToImage));
+                }
+
+
                 item_container.append(
                     $('<a href="../Article/?id=' + item.url + '">').text(item.title)
                 );
                 item_container.append($('<p>').append(item.description));
+
                 $('.featured').append(item_container);
             });
+            $(".featured .post-container:nth-child(3n)").addClass('wide');
         });
     });
+}
+
+function imgError(image) {
+    image.onerror = "";
+    image.src = "../../lib/images/default_news_icon.svg";
+    return true;
 }
 
 function closeSource(source) {

@@ -1,7 +1,75 @@
-﻿@section featured{
-    <form action="#" method="post">
-        <input type="email" class="" name="email"/>
-        <input type="password" class="" name="password" />
-        @Html.ActionLink("Add User", "AddUser", "Account")
-    </form>
+﻿@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.EntityFramework
+@using Microsoft.Owin.Security
+
+@{
+    ViewBag.Title = "Log in";
+
+    // Initialize general page variables
+    var userName = "";
+    var password = "";
+
+    var returnUrl = Request.QueryString["ReturnUrl"];
+    if (returnUrl.IsEmpty())
+    {
+        // Go to home page when done if no return url provided
+        returnUrl = Href("~/");
+    }
+
+    // If this is a POST request, validate and process data
+    if (IsPost)
+    {
+        AntiForgery.Validate();
+        userName = Request.Form["userName"];
+        password = Request.Form["password"];
+
+        var userStore = new UserStore<IdentityUser>();
+        var userManager = new UserManager<IdentityUser>(userStore);
+        try
+        {
+            var user = userManager.Find(userName, password);
+
+            if (user != null)
+            {
+                var userIdentity = userManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+
+    }
 }
+
+<hgroup class="title">
+    <h1>@ViewBag.Title</h1>
+</hgroup>
+
+<section id="loginForm">
+    <h2>Use a local account to log in.</h2>
+    <form method="post">
+        @AntiForgery.GetHtml()
+        <fieldset>
+            <legend>Log in to Your Account</legend>
+            <ol>
+                <li class="userName">
+                    <label for="userName" class="error-label"> User name</label>
+                    <input type="text" id="userName" name="userName" value="@userName" />
+                </li>
+                <li class="password">
+                    <label for="password" class="error-label">Password</label>
+                    <input type="password" id="password" name="password" value="@password"/>
+                    @* Write any password validation errors to the page *@
+                    @Html.ValidationMessage("password")
+                </li>
+            </ol>
+            <input type="submit" value="Log in" />
+        </fieldset>
+    </form>
+    <p>
+        <a href="~/Account/Register">Don't have an Account?</a>
+        <a href="~/Account/ForgotPassword">Did you forget your password?</a>
+    </p>
+</section>
+
