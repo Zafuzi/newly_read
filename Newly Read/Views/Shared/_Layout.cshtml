@@ -24,11 +24,8 @@
                 <li class="push-right center"><a href="~/">Newly Read</a></li>
                 @if (User.Identity.IsAuthenticated) {
                     <li class="float-right"><a href="~/">@Context.User.Identity.Name</a></li>
-                    <li class="float-right">@Html.ActionLink("Log Out", "IdentitySignout", "Account")</li>
-                } else {
-                    <li class="float-right"><a href="~/Home/AppSettings"><i class="material-icons">settings</i></a></li>
                 }
-                
+                <li class="float-right"><a href="~/Home/AppSettings"><i class="material-icons">settings</i></a></li>
             </ul>
         </nav>
         <nav id="categories">
@@ -47,11 +44,15 @@
 
     <environment names="Development">
         <script src="~/lib/scripts/jquery-3.1.1.js"></script>
+        
         <script src="~/lib/scripts/modernizr-2.8.3.js"></script>
         <script src="~/lib/scripts/jquery.sticky.js"></script>
+        <script src="~/lib/scripts/velocity.js"></script>
         <script src="~/lib/scripts/index.js"></script>
+        
     </environment>
-    <main>
+    <main class="dark-toggle">
+        <div class="reader dark-toggle"></div>
         @RenderSection("featured", required: false)
         <section>
             @RenderBody()

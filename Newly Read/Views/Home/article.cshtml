@@ -6,7 +6,7 @@
 
 @section featured{
     <div class="row" id="back-btn">
-        <a href="javascript:history.back()">
+        <a href="~/Home/Category/?id=@ViewBag.Category">
             <i class="material-icons">arrow_back</i>
         </a>
     </div>
@@ -25,7 +25,7 @@
         })
         .then(json => {
             console.log(json);
-            var article_container = $('<div class="article-container">');
+            var article_container = $('<div class="article-container dark-toggle">');
 
             var article_title = $('<div>');
             article_title.append($('<h3>').text(json.title));

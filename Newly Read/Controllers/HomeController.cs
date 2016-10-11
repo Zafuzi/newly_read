@@ -9,9 +9,10 @@ namespace Newly_Read.Controllers
             return View();
         }
 
-        public ActionResult Category(string id)
+        public ActionResult Category(string id, string category)
         {
             ViewBag.UrlMasterID = id;
+            ViewBag.Category = category;
             return View();
         }
 
@@ -22,6 +23,11 @@ namespace Newly_Read.Controllers
         }
 
         public ActionResult AppSettings() {
+            return View();
+        }
+
+        public ActionResult About(string error) {
+            ViewBag.Error = error;
             return View();
         }
     }

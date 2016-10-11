@@ -11,14 +11,38 @@ var sources = {
 }
 
 $(function () {
-    if (!localStorage.getItem('sources')) {
-        getSources();
+    //if (!localStorage.getItem('sources')) {
+    //    getSources();
+    //} else {
+    //    sources = JSON.parse(localStorage.getItem('sources'));
+    //}
+    getSources();
+    $("#categories").sticky({ topSpacing: 0 });
+    checkDarkMode();
+});
+function checkDarkMode() {
+    var isTrue = localStorage.getItem('dark-mode');
+    console.log(localStorage.getItem('dark-mode'));
+
+    if (isTrue == "true") {
+        $('.dark-toggle').addClass('dark-mode');
+        $('a').addClass('light-link');
     } else {
-        sources = JSON.parse(localStorage.getItem('sources'));
+        $('.dark-toggle').removeClass('dark-mode');
+        $('a').removeClass('light-link');
     }
 
-    $("#categories").sticky({ topSpacing: 0 });
-});
+    $('#dark-check').change(function (e) {
+        isTrue = localStorage.getItem('dark-mode');
+        console.log(isTrue);
+        $('.dark-toggle').toggleClass('dark-mode');
+        if (isTrue == "true") {
+            localStorage.setItem('dark-mode', "false");
+        } else {
+            localStorage.setItem('dark-mode', "true");
+        }
+    });
+}
 
 // Get the list of sources
 function getSources() {
@@ -62,8 +86,8 @@ function getSourcesForCategory(category) {
                 var item_container;
                 item_container = $('<div class="post-container">');
                 item_container.click(function () {
-                    window.location.replace("../Article/?id=" + item.url);
-                });
+                    showArticle('' + item.url);
+                })
 
                 if (!item.urlToImage) {
                     item_container.append($('<img>').attr('src', '../../lib/images/default_news_icon.svg'));
@@ -71,10 +95,7 @@ function getSourcesForCategory(category) {
                     item_container.append($('<img onerror="imgError(this)">').attr('src', item.urlToImage));
                 }
 
-
-                item_container.append(
-                    $('<a href="../Article/?id=' + item.url + '">').text(item.title)
-                );
+                item_container.append($('<h4>').text(item.title));
                 item_container.append($('<p>').append(item.description));
 
                 $('.featured').append(item_container);
@@ -95,4 +116,85 @@ function closeSource(source) {
     var parent = source.parentElement;
     console.log(parent);
     $(parent).find('.post-container').slideToggle(500);
+}
+
+function showArticle(url) {
+
+    window.requestAnimationFrame(function () {
+        $('.reader').velocity({
+            'display': 'flex',
+            'height': '100%',
+            opacity: 1,
+            duration: 500
+        });
+        $('.featured').velocity({
+            'display': 'none',
+            'height': '0',
+            opacity: 0,
+            duration: 500
+        });
+        if (localStorage.getItem('dark-mode') == "true") {
+            $('.reader').css('background', '#3e3e3e');
+        }
+        $('.reader').velocity("scroll", { duration: 100, easing: "linear" });
+    });
+    window.requestAnimationFrame(function () {
+        closeAnimation('.featured');
+    });
+    fetch('http://api.embed.ly/1/extract?key=08ad220089e14298a88f0810a73ce70a&url=' + url)
+        .then(res => {
+            if (res.ok) {
+                return res.json();
+            } else {
+                return false;
+            }
+        })
+        .then(json => {
+            var article_container = $('<div class="article-container dark-toggle">');
+            if (!json) {
+                article_container.append($('<h4>').text('Sorry, but it looks like that article is not longer available.'));
+                article_container.append($('<p>').text('Here is the link for the original article: ' + url));
+                $('.reader').html(article_container);
+                $('.reader').append($('<a id="back-btn" onclick="closeArticle()">').text('Close'));
+                return false;
+            }
+
+            var article_title = $('<div>');
+            article_title.append($('<h3>').text(json.title));
+
+            var article_authors = $('<p>').text('Written by: ');
+            if (json.authors) {
+                json.authors.map(author => {
+                    article_authors.append($('<span>').text(author.name));
+                })
+            }
+
+            article_title.append(article_authors);
+
+
+            var attribution_header = $('<div>');
+            attribution_header.append('<p>').text('This article was originally published by: ');
+            attribution_header.append($('<a>').text(json.provider_display).attr('href', url));
+
+            article_container.append(article_title);
+            article_container.append(attribution_header);
+            article_container.append(json.content);
+
+            $('.reader').html(article_container);
+            $('.reader').append($('<a id="back-btn" onclick="closeArticle()">').text('Close'));
+        });
+}
+function closeArticle() {
+    $('.reader').velocity({
+        'display': 'none',
+        'height': '0',
+        opacity: 0,
+        duration: 500
+    });
+    $('.featured').velocity({
+        'display': 'flex',
+        'height': '100%',
+        opacity: 1,
+        duration: 500
+    });
 }
