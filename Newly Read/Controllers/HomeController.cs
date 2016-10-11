@@ -5,8 +5,7 @@ namespace Newly_Read.Controllers
     public class HomeController : Controller
     {
         // GET: Home
-        public ActionResult Index()
-        {
+        public ActionResult Index() {
             return View();
         }
 
@@ -19,6 +18,10 @@ namespace Newly_Read.Controllers
         public ActionResult Article(string id)
         {
             ViewBag.UrlMasterID = id;
+            return View();
+        }
+
+        public ActionResult AppSettings() {
             return View();
         }
     }

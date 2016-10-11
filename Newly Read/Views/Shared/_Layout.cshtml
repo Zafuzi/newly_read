@@ -21,13 +21,12 @@
     <header>
         <nav id="top_nav">
             <ul>
-                <li class="push-right"><a href="~/">Newly Read</a></li>
+                <li class="push-right center"><a href="~/">Newly Read</a></li>
                 @if (User.Identity.IsAuthenticated) {
                     <li class="float-right"><a href="~/">@Context.User.Identity.Name</a></li>
                     <li class="float-right">@Html.ActionLink("Log Out", "IdentitySignout", "Account")</li>
                 } else {
-                    <li class="float-right"><a href="~/Account/Login">Login</a></li>
-                    <li class="float-right"><a href="~/Account/Register">Register</a></li>
+                    <li class="float-right"><a href="~/Home/AppSettings"><i class="material-icons">settings</i></a></li>
                 }
                 
             </ul>
@@ -35,9 +34,13 @@
         <nav id="categories">
             <ul>
                 <li><a href="~/Home/Category/?id=business">Business</a></li>
-                <li><a href="~/Home/Category/?id=technology">Technology</a></li>
+                <li><a href="~/Home/Category/?id=entertainment">Entertainment</a></li>
+                <li><a href="~/Home/Category/?id=gaming">Gaming</a></li>
                 <li><a href="~/Home/Category/?id=general">General</a></li>
+                <li><a href="~/Home/Category/?id=music">Music</a></li>
+                <li><a href="~/Home/Category/?id=science">Science and Nature</a></li>
                 <li><a href="~/Home/Category/?id=sport">Sports</a></li>
+                <li><a href="~/Home/Category/?id=technology">Technology</a></li>
             </ul>
         </nav>
     </header>
@@ -45,10 +48,10 @@
     <environment names="Development">
         <script src="~/lib/scripts/jquery-3.1.1.js"></script>
         <script src="~/lib/scripts/modernizr-2.8.3.js"></script>
+        <script src="~/lib/scripts/jquery.sticky.js"></script>
         <script src="~/lib/scripts/index.js"></script>
     </environment>
     <main>
-
         @RenderSection("featured", required: false)
         <section>
             @RenderBody()

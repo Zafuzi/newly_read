@@ -11,11 +11,16 @@ body, html {
     color: #515151;
 }
 
+header {
+    width: 100vw;
+    background: #4e4e4e;
+}
+
 a {
     text-decoration: none;
     font-weight: lighter;
     cursor: pointer;
-    color: #207cca;
+    color: #1a5491;
 }
 
 hr {
@@ -29,33 +34,74 @@ hr {
 
 #categories {
     list-style-type: none;
-    display: inline-flex;
+    display: flex;
     width: 100vw;
+    background: #4e4e4e;
     margin: 0;
     padding: 0;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    background: #1a2333;
+    align-items: flex-start;
+    flex-flow: row nowrap;
     z-index: 99;
+    overflow-y: hidden;
 }
 
+    #categories ul {
+        list-style-type: none;
+        height: inherit;
+        overflow: auto;
+        white-space: nowrap;
+        margin: 0;
+        padding: 0;
+        width: 100vw;
+        overflow-y: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+        #categories ul li {
+            display: inline-flex;
+            align-items: center;
+            color: #1a5491;
+            padding: 0;
+        }
+
+            #categories ul li a {
+                height: 100%;
+                align-items: center;
+                color: #fff;
+                padding: 1em .5em;
+                margin: 0;
+                font-weight: lighter;
+            }
+
+            #categories ul li:hover {
+                background: rgba(255,255,255,.1);
+            }
+
+            #categories ul li:active {
+                background: rgba(255,255,255,.1);
+            }
+
 #top_nav {
-    width: 100vw;
-    background: #1e1e1e;
+    max-width: 100%;
     height: 32px;
-    margin: 0;
+    background: #2e2e2e;
     align-items: center;
+    justify-content: center;
+    margin: 0;
     padding: 0;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
 }
 
     #top_nav ul {
         list-style-type: none;
         display: flex;
-        justify-content: center;
+        width: 90%;
+        justify-content: space-between;
         align-items: center;
-        margin: 0;
-        padding: 0 15px 0 15px;
+        padding: 0;
+        margin: auto;
     }
 
         #top_nav ul li {
@@ -68,38 +114,6 @@ hr {
                 color: #fff;
                 display: block;
                 height: 100%;
-                margin: .2em;
-            }
-
-.push-right {
-    flex: 1;
-}
-
-.float-right {
-    margin-left: auto;
-}
-
-#categories ul {
-    list-style-type: none;
-    height: inherit;
-    margin: 0;
-    padding: 0;
-}
-
-    #categories ul li {
-        display: inline-block;
-        height: 100%;
-    }
-
-        #categories ul li a {
-            height: 100%;
-            display: block;
-            padding: 25px;
-            color: #fff !important;
-        }
-
-            #categories ul li a:hover {
-                background: rgba(255,255,255,.1);
             }
 
 .banner {
@@ -142,6 +156,7 @@ hr {
     line-height: 1.5;
     font-family: Arial;
     font-weight: 400;
+    overflow: auto;
 }
 
 .post-container {
@@ -164,7 +179,8 @@ hr {
         padding: 0;
         object-fit: cover;
     }
-    .post-container a, p{
+
+    .post-container a, p {
         padding: .5em;
     }
 
@@ -188,9 +204,6 @@ hr {
         object-fit: cover;
     }
 
-
-
-
 .featured-article {
     display: inline-flex;
     flex: 0 0 calc(100% - 1em);
@@ -205,7 +218,7 @@ hr {
     margin: 1em;
     margin-top: 0;
     padding: 0;
-    width: 100vw;
+    width: 50vw;
     font-size: 1rem;
     flex-flow: row wrap;
     align-items: center;
@@ -235,13 +248,32 @@ hr {
         margin: 0;
     }
 
-    .post-container, .wide{
+    .post-container, .wide {
         padding: 0;
         margin: .25em;
         font-size: 1rem;
         line-height: 1.1rem;
     }
-    .post-container p{
-        display: none;
+
+        .post-container p {
+            display: none;
+        }
+
+    .article-container {
+        width: 85vw;
+    }
+    
+    #categories ul{
+        justify-content: flex-start;
+    }
+    #categories ul li a{
+        padding: .5em !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .article-container img {
+        width: 50% !important;
+        margin-left: calc(25% - 1em);
     }
 }

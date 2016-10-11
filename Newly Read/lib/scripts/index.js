@@ -16,6 +16,8 @@ $(function () {
     } else {
         sources = JSON.parse(localStorage.getItem('sources'));
     }
+
+    $("#categories").sticky({ topSpacing: 0 });
 });
 
 // Get the list of sources
