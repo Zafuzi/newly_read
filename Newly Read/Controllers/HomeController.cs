@@ -30,5 +30,15 @@ namespace Newly_Read.Controllers
             ViewBag.Error = error;
             return View();
         }
+
+        public ActionResult Comments() {
+
+            // The plan is to eventually email this to the webmaster
+            ViewBag.Email = Request.Form["email"];
+            ViewBag.Comment = Request.Form["comment"];
+            ViewBag.Consent = Request.Form["consent"];
+
+            return View();
+        }
     }
 }

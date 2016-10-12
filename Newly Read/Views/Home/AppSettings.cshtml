@@ -1,15 +1,9 @@
 ﻿@{
     ViewBag.Title = "Settings";
-    var newsContent = "";
-    if (IsPost)
-    {
-        newsContent = Request.Form["editor"];
-    }
 }
 <div class="featured">
     <ul class="app-settings-list dark-toggle">
-        @if (User.Identity.IsAuthenticated)
-        {
+        @if (User.Identity.IsAuthenticated) {
             <li>
                 Manage Your Account
                 <div class="manage-links">
@@ -17,9 +11,7 @@
                     <a href="~/Account/IdentitySignOut">Sign Out</a>
                 </div>
             </li>
-        }
-        else
-        {
+        } else {
             <li><h3>To manage account settings please login or register below</h3></li>
             <li><a href="~/Account/Login">Login</a> / <a href="~/Account/Register">Register</a></li>
         }
@@ -30,16 +22,23 @@
             </label>
         </li>
     </ul>
-    <p>@newsContent</p>
+    <form class="comment-container dark-toggle" action="/Home/Comments/" method="POST">
+        <h4> Leave a message for the devs!</h4>
+        <label for="email">
+            Your Email:
+            <input type="email" name="email" id="email"/>
+        </label>
+        <label for="comment">
+            Message: 
+            <textarea name="comment" id="comment"></textarea>
+        </label>
+        <label for="consent" id="check-label">
+            @Html.CheckBox("Consent", new { id = "consent" })
+            Recieve email from Newly Read.
+        </label>
+        <input type="submit" class="btn btn-right" value="Submit" />
+    </form>
 </div>
-
-<form action="#" method="POST"></form>
-
-<div class="editor" name="editor"></div>
-<input type="submit" class="editor-submit" onclick="postData()" value="Submit" />
-
-
-
 
 @section scripts{
     <script type="text/javascript">
@@ -47,30 +46,6 @@
             $('#dark-check').attr("checked", true);
         } else {
             $('#dark-check').attr("checked", false);
-        }
-        $(function () {
-            var editor = new Quill('.editor', {
-                modules: {
-                    toolbar: [
-                      [{ header: [1, 2, false] }],
-                      ['bold', 'italic', 'underline']
-                    ]
-                },
-                placeholder: 'Write your own news...',
-                theme: 'snow' // or 'bubble'
-            });
-        });
-
-        function postData() {
-            var data = $('.ql-editor').html();
-            data = encodeURIComponent(data);
-            window.location.replace("/Home/About/?error=" + data);
-            //$.ajax({
-            //    method: 'POST',
-            //    url: "/Home/About",
-            //    data: encodeURIComponent(data),
-            //    dataType: "text"
-            //});
         }
     </script>
 }
