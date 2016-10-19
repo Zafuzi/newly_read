@@ -345,6 +345,10 @@
       <HintPath>..\packages\Owin.Security.Providers.Yammer.2.9.0\lib\net45\Owin.Security.Providers.Yammer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.105.2.3\lib\net452\RestSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Extensions, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Extensions.dll</HintPath>
@@ -449,6 +453,12 @@
     <Content Include="lib\scripts\jquery.validate.min.js" />
     <Content Include="lib\scripts\jquery.validate.unobtrusive.js" />
     <Content Include="lib\scripts\jquery.validate.unobtrusive.min.js" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -460,7 +470,9 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Service References\Application Insights\ConnectedService.json" />
     <Content Include="lib\scripts\jquery-3.1.1.slim.min.map" />
@@ -473,6 +485,15 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Home\AppSettings.cshtml" />
     <Content Include="Views\Home\Comments.cshtml" />
+    <Content Include="Views\Home\BuggyPage_Arrays.cshtml" />
+    <Content Include="Views\Home\BuggyPage_Indexes.cshtml" />
+    <Content Include="Views\Home\Product.cshtml" />
+    <Content Include="Views\Sources\Create.cshtml" />
+    <Content Include="Views\Sources\Delete.cshtml" />
+    <Content Include="Views\Sources\Details.cshtml" />
+    <Content Include="Views\Sources\Edit.cshtml" />
+    <Content Include="Views\Sources\Index.cshtml" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -486,28 +507,39 @@
     <Compile Include="App_Start\IdentitySignIn.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
-    <Compile Include="Classes\AppUserState.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\StorageController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\SourcesController.cs" />
     <Compile Include="ErrorHandler\AiHandleErrorAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\HandleErrorAttribute.cs" />
-    <Compile Include="Models\ArticlesModel.cs" />
+    <Compile Include="Migrations\201610190345220_Initial.cs" />
+    <Compile Include="Migrations\201610190345220_Initial.Designer.cs">
+      <DependentUpon>201610190345220_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\IdentityModel.cs" />
+    <Compile Include="Models\MyDbContext.cs" />
+    <Compile Include="Models\Sources.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Storage\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201610190345220_Initial.resx">
+      <DependentUpon>201610190345220_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

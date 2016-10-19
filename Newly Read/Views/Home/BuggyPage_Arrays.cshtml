@@ -1,0 +1,58 @@
+﻿@{
+    var errorString = "";
+    //First check to make sure there is actually a post to this page.
+    if (IsPost) {
+        //Get the full name from the posted request
+        string fullName = Request.Form["name"];
+        //Make sure that the input was not empty
+        if (fullName.Length > 0) {
+            string[] names = fullName.Split(' ');
+            if (names.Length > 2) {
+                string firstName = names[0];
+                string middleName = names[1];
+                char middleInitial = middleName[0];
+                string lastName = names[2];
+                <p>
+                    Your name is:
+                    <span class="success">
+                        @firstName @middleInitial. @lastName
+                    </span>
+                </p>
+            } else {
+                errorString = "You did not supply enough values, use three names.";
+            }
+        } else {
+            errorString = "This field must not be empty.";
+        }
+    }
+}
+<style>
+    .error {
+        color: red;
+    }
+    .success{
+        color: #31b73c;
+    }
+</style>
+<!--
+   Name: Zachary Foutz
+   Date: 10/14/16
+   Lab 3 BuggyPage problem
+   As provided, this file has bugs. Find and fix them
+   so that the output given David Jon Hendricks displays
+   "Your name is: David J. Hendricks".
+
+   You can assume that the user will input only and always
+   three names (challenge: already have programming down?
+   make the page resilient to bad form inputs also)
+-->
+<p>Enter your full name (First, Middle, Last)</p>
+<form action="" method="post">
+    @if (errorString != "") {
+        @* Hide the error string unless there is an error *@
+        <p class="error">@errorString</p>
+    }
+    <p><input type="text" name="name" placeholder="Your Name Here" /></p>
+    <p><input type="submit" value="Submit" /></p>
+</form>
+

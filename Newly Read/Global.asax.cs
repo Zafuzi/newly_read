@@ -12,6 +12,7 @@ namespace Newly_Read {
     public class Global : System.Web.HttpApplication {
 
         protected void Application_Start(object sender, EventArgs e) {
+            App_Start.WebApiConfig.Configure(RouteTable.Routes);
             App_Start.FilterConfig.Configure(GlobalFilters.Filters);
             App_Start.RouteConfig.Configure(RouteTable.Routes);
 

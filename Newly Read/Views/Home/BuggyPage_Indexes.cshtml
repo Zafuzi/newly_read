@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <!--
+       Name: Zachary Foutz
+       Date: 10/14/16
+       Lab 3 BuggyPage problem
+       As provided, this file has bugs. Find and fix them
+       so that the output given David Jon Hendricks displays
+       "Your name is: David J. Hendricks".
+
+       You can assume that the user will input only and always
+       three names (challenge: already have programming down?
+       make the page resilient to bad form inputs also)
+    -->
+    <title>Name Manipulation</title>
+    <style>
+        .error {
+            color: red;
+        }
+
+        .success {
+            color: #31b73c;
+        }
+    </style>
+</head>
+<body>
+    @{
+        var fullName = "";
+        string errorString = "";
+        string shortName = "";
+        if (IsPost) {
+            //Get the name submitted by the user
+            fullName = Request.Form["fullName"];
+
+            // Make sure that data was posted
+            if (fullName.Length > 0) {
+                string[] names = fullName.Split(' ');
+                // Make sure that there is at least 2 names
+                if (names.Length > 2) {
+                    // For each string in the array check if its the middle name, otherwise append it to the new name string.
+                    for (int i = 0; i < names.Length; i++) {
+                        if (i == 1) {
+                            // Middle name
+                            shortName += names[i][0] + ". ";
+                        } else {
+                            shortName += names[i] + " ";
+                        }
+                    }
+                } else {
+                    errorString = "You did not supply enough values, use three names.";
+                }
+            } else {
+                errorString = "This field must not be empty.";
+            }
+            // Now display the information.
+            <p>Your name is: @shortName</p>
+        }
+    }
+    <p>Enter your full name (First, Middle, Last)</p>
+    <form action="" method="post">
+        <p class="error">@errorString</p>
+        <p><input type="text" name="fullName" placeholder="Your Name Here" value="@fullName" /></p>
+        <p><input type="submit" value="Submit" /></p>
+    </form>
+</body>
+</html>
