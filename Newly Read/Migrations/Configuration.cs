@@ -11,9 +11,10 @@ namespace Newly_Read.Migrations {
         public Configuration() {
             AutomaticMigrationsEnabled = true;
             AutomaticMigrationDataLossAllowed = true;
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<MyDbContext, Configuration>());
         }
         protected override void Seed(Newly_Read.Models.MyDbContext context) {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<MyDbContext, Configuration>());
+            
             //  This method will be called after migrating to the latest version.
             var client = new RestClient("https://newsapi.org/v1");
             var request = new RestRequest();
