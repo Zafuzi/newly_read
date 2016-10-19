@@ -30,10 +30,6 @@ namespace Newly_Read.Controllers
             ViewBag.Error = error;
             return View();
         }
-        public ActionResult Product(string error) {
-            ViewBag.Error = error;
-            return View();
-        }
 
         public ActionResult Comments() {
 

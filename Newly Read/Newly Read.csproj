@@ -485,9 +485,6 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Home\AppSettings.cshtml" />
     <Content Include="Views\Home\Comments.cshtml" />
-    <Content Include="Views\Home\BuggyPage_Arrays.cshtml" />
-    <Content Include="Views\Home\BuggyPage_Indexes.cshtml" />
-    <Content Include="Views\Home\Product.cshtml" />
     <Content Include="Views\Sources\Create.cshtml" />
     <Content Include="Views\Sources\Delete.cshtml" />
     <Content Include="Views\Sources\Details.cshtml" />
@@ -510,7 +507,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\SourcesController.cs" />
     <Compile Include="ErrorHandler\AiHandleErrorAttribute.cs" />
     <Compile Include="Global.asax.cs">

@@ -27,8 +27,6 @@ namespace Newly_Read.App_Start {
             });
 
             AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.NameIdentifier;
-            ProductsController pc = new ProductsController();
-            pc.GetAllProducts();
         }
     }
 }
