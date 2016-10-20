@@ -7,6 +7,7 @@ using Owin;
 using System.Web.Helpers;
 using System.Security.Claims;
 using Newly_Read.Controllers;
+using System.Data.Entity;
 
 [assembly: OwinStartup(typeof(Newly_Read.App_Start.Startup))]
 namespace Newly_Read.App_Start {
@@ -27,6 +28,8 @@ namespace Newly_Read.App_Start {
             });
 
             AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.NameIdentifier;
+
+            Database.SetInitializer(new CreateDatabaseIfNotExists<Models.MyDbContext>());
         }
     }
 }

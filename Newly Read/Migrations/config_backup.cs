@@ -33,7 +33,7 @@ namespace Newly_Read.Migrations {
                 context.SaveChanges();
             }
 
-            if (context.Sources == null) {
+            if (source == null) {
                 return;
             } else {
                 foreach (var key in source) {

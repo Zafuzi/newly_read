@@ -14,7 +14,11 @@ namespace Newly_Read.Controllers {
 
         // GET: Sources
         public ActionResult Index() {
-            return View(db.Sources.ToList());
+            if(db.Sources.Count() > 0) {
+                return View(db.Sources.ToList());
+            }else {
+                return View();
+            }
         }
 
         // GET: Sources/Details/5

@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 
@@ -14,11 +16,9 @@ namespace Newly_Read.Models {
         // For more information refer to the documentation:
         // http://msdn.microsoft.com/en-us/data/jj591621.aspx
 
-        public MyDbContext() : base("name=MyDbContext") {
-
+        public MyDbContext() : base("name=DefaultConnection") {
         }
 
         public System.Data.Entity.DbSet<Newly_Read.Models.Sources> Sources { get; set; }
-
     }
 }

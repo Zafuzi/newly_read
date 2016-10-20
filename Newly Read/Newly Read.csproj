@@ -441,7 +441,6 @@
     <Content Include="packages.config" />
     <Content Include="lib\scripts\ai.0.22.19-build00125.js" />
     <Content Include="lib\scripts\ai.0.22.19-build00125.min.js" />
-    <Content Include="App_Browsers\Mobile.browser" />
     <Content Include="App_Start\CodePasteKeys.json" />
     <None Include="lib\scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="lib\scripts\jquery-3.1.1.js" />
@@ -484,6 +483,8 @@
     <Content Include="Views\Sources\Details.cshtml" />
     <Content Include="Views\Sources\Edit.cshtml" />
     <Content Include="Views\Sources\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\AppHarbor.pubxml" />
+    <None Include="Properties\PublishProfiles\NewlyRead20161020122911 - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -506,13 +507,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\HandleErrorAttribute.cs" />
-    <Compile Include="Migrations\201610190345220_Initial.cs" />
-    <Compile Include="Migrations\201610190345220_Initial.Designer.cs">
-      <DependentUpon>201610190345220_Initial.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <None Include="Migrations\config_backup.cs" />
     <Compile Include="Models\IdentityModel.cs" />
     <Compile Include="Models\MyDbContext.cs" />
+    <Compile Include="Models\SourceDbInitializer.cs" />
     <Compile Include="Models\Sources.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -524,11 +523,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201610190345220_Initial.resx">
-      <DependentUpon>201610190345220_Initial.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
