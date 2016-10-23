@@ -17,9 +17,10 @@ namespace Newly_Read {
         protected void Application_Start(object sender, EventArgs e) {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<Models.MyDbContext, Migrations.Configuration>());
 
-            var migrator = new DbMigrator(new Migrations.Configuration());
-            Debug.WriteLine(migrator.ToString());
-            migrator.Update();
+            //var migrator = new DbMigrator(new Migrations.Configuration());
+            //    Debug.WriteLine(migrator.ToString());
+            //migrator.Update();
+
             App_Start.WebApiConfig.Configure(RouteTable.Routes);
             App_Start.FilterConfig.Configure(GlobalFilters.Filters);
             App_Start.RouteConfig.Configure(RouteTable.Routes);
