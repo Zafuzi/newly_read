@@ -509,9 +509,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\HandleErrorAttribute.cs" />
-    <Compile Include="Migrations\201610222200090_Initial_Create.cs" />
-    <Compile Include="Migrations\201610222200090_Initial_Create.Designer.cs">
-      <DependentUpon>201610222200090_Initial_Create.cs</DependentUpon>
+    <Compile Include="Migrations\201610230756376_Initial_Create.cs" />
+    <Compile Include="Migrations\201610230756376_Initial_Create.Designer.cs">
+      <DependentUpon>201610230756376_Initial_Create.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <None Include="Migrations\config_backup.cs" />
@@ -532,8 +532,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201610222200090_Initial_Create.resx">
-      <DependentUpon>201610222200090_Initial_Create.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201610230756376_Initial_Create.resx">
+      <DependentUpon>201610230756376_Initial_Create.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

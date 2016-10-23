@@ -29,7 +29,11 @@ namespace Newly_Read.Controllers {
         }
 
         public string GetSources() {
-            string result = JsonConvert.SerializeObject(db.Sources);
+            string result = JsonConvert.SerializeObject("[{message: There was an error obtaining the source material}]");
+            if (db.Sources != null) {
+                result = JsonConvert.SerializeObject(db.Sources);
+            }
+            
             return result;
         }
 

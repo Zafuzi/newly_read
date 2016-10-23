@@ -7,11 +7,16 @@ namespace Newly_Read.Migrations {
     using System.Data.Entity.Migrations;
     using System.Diagnostics;
     using System.Linq;
+    using System.Runtime.CompilerServices;
 
     internal sealed class Configuration : DbMigrationsConfiguration<Newly_Read.Models.MyDbContext> {
+
+        
+
         public Configuration() {
             AutomaticMigrationsEnabled = true;
             AutomaticMigrationDataLossAllowed = true;
+            this.Seed(new Models.MyDbContext());
         }
         protected override void Seed(Newly_Read.Models.MyDbContext context) {
             //  This method will be called after migrating to the latest version.

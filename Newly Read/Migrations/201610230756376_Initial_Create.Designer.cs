@@ -13,7 +13,7 @@ namespace Newly_Read.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201610222200090_Initial_Create"; }
+            get { return "201610230756376_Initial_Create"; }
         }
         
         string IMigrationMetadata.Source
