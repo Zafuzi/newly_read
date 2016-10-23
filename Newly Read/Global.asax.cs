@@ -15,7 +15,7 @@ namespace Newly_Read {
     public class Global : System.Web.HttpApplication {
 
         protected void Application_Start(object sender, EventArgs e) {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<Models.MyDbContext, Migrations.Configuration>());
+            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<Models.MyDbContext, Migrations.Configuration>());
 
             //var migrator = new DbMigrator(new Migrations.Configuration());
             //    Debug.WriteLine(migrator.ToString());
