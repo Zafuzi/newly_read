@@ -1,24 +1,17 @@
 ﻿@{
-    var url = ViewBag.UrlMasterID;
+    var url = ViewBag.ArticleURL;
     ViewBag.Title = "Article: " + url;
 }
 
 
 @section featured{
-    <div class="row" id="back-btn">
-        <a href="~/Home/Category/?id=@ViewBag.Category">
-            <i class="material-icons">arrow_back</i>
-        </a>
-    </div>
-    <div class="featured"></div>
+    <div class="featured scene_element scene_element--fadeinright" id="featured-article"></div>
 }
 
 <script type="text/javascript">
     $(function () {
-        getArticle();
-    });
-    function getArticle() {
         var url = '@url';
+        console.log(url);
         fetch('http://api.embed.ly/1/extract?key=08ad220089e14298a88f0810a73ce70a&url=' + url)
         .then(res => {
             return res.json();
@@ -47,5 +40,20 @@
             article_container.append(json.content);
             $('.featured').html(article_container);
         });
-    }
+
+        'use strict';
+        var $body = $('html, body'), // Define jQuery collection 
+            content = $('#featured-article').smoothState({
+                onStart: {
+                    duration: 250,
+                    render: function () {
+                        content.toggleAnimationClass('is-exiting');
+
+                        // Scroll user to the top
+                        $body.animate({ 'scrollTop': 0 });
+
+                    }
+                }
+            }).data('smoothState');
+    });
 </script>

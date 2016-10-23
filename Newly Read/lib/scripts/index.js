@@ -11,18 +11,13 @@ var sources = {
 }
 
 $(function () {
-    //if (!localStorage.getItem('sources')) {
-    //    getSources();
-    //} else {
-    //    sources = JSON.parse(localStorage.getItem('sources'));
-    //}
     getSources();
     $("#categories").sticky({ topSpacing: 0 });
+    $(".select").sticky({ topSpacing: 0 });
     checkDarkMode();
 });
 function checkDarkMode() {
     var isTrue = localStorage.getItem('dark-mode');
-    console.log(localStorage.getItem('dark-mode'));
 
     if (isTrue == "true") {
         $('.dark-toggle').addClass('dark-mode');
@@ -46,9 +41,10 @@ function checkDarkMode() {
 
 // Get the list of sources
 function getSources() {
-    $.get('https://newsapi.org/v1/sources?apiKey=' + apiKey)
+    $.get('../../Sources/GetSources')
     .done(function (res) {
-        res.sources.map(function (source) {
+        res = JSON.parse(res);
+        res.map(function (source) {
             switch (source.category) {
                 case 'business': sources.business.push(source); break;
                 case 'entertainment': sources.entertainment.push(source); break;
@@ -60,49 +56,75 @@ function getSources() {
                 case 'technology': sources.technology.push(source); break;
             }
         });
-        localStorage.setItem('storage', JSON.stringify(sources));
+        localStorage.setItem('sources', JSON.stringify(sources));
     });
 }
 
 function getSourcesForCategory(category) {
     $('.featured').html('');
-    var currentSource = [];
-    switch (category) {
-        case 'business': currentSource = sources.business; break;
-        case 'entertainment': currentSource = sources.entertainment; break;
-        case 'gaming': currentSource = sources.gaming; break;
-        case 'general': currentSource = sources.general; break;
-        case 'music': currentSource = sources.music; break;
-        case 'science-and-nature': currentSource = sources.science; break;
-        case 'sport': currentSource = sources.sport; break;
-        case 'technology': currentSource = sources.technology; break;
-        case 'defaut': console.log('You fucked up. Try again.'); break;
-    }
-    currentSource.map(function (source) {
-        console.log(source);
-        $.get('https://newsapi.org/v1/articles?sortBy=latest&apiKey=' + apiKey + '&source=' + source.id)
-        .done(function (res) {
-            res.articles.map(function (item, key) {
-                var item_container;
-                item_container = $('<div class="post-container">');
-                item_container.click(function () {
-                    showArticle('' + item.url);
-                })
 
-                if (!item.urlToImage) {
-                    item_container.append($('<img>').attr('src', '../../lib/images/default_news_icon.svg'));
-                } else {
-                    item_container.append($('<img onerror="imgError(this)">').attr('src', item.urlToImage));
-                }
-
-                item_container.append($('<h4>').text(item.title));
-                item_container.append($('<p>').append(item.description));
-
-                $('.featured').append(item_container);
+    var sourceArray = [];
+    $.get("../../Sources/GetArticles/?category=" + category)
+            .fail(function (res) {
+                console.log("failed to load articles for source", source.sourceID);
+            })
+            .done(function (res) {
+                res = JSON.parse(res);
+                console.log(res);
+                res.map(function (item, key) {
+                    sourceArray.push(item);
+                });
+                console.log(sourceArray);
+                appendArticle(sourceArray);
             });
-            $(".featured .post-container:nth-child(3n)").addClass('wide');
+}
+
+function appendArticle(array) {
+    array.map(function (item, key) {
+        var item_container = $('<div class="post-container">');
+
+        //var item_content = $('<a class="article-link">').attr('href', '../Article/?url=' + item.url);
+        var item_content = $('<a class="article-link">').click(function () {
+            showArticle('' + item.url);
         });
+
+        var shareBar = $('<div class="sharebar">');
+        shareBar.append($('<p>').append($('<i class="material-icons">').text('share')));
+        shareBar.append($('<p>').append($('<i class="material-icons">').text('comment')));
+
+        var sharebar_votes = $('<p>');
+        sharebar_votes.append($('<i class="material-icons">').text('keyboard_arrow_up'));
+        sharebar_votes.append($('<i class="material-icons">').text('keyboard_arrow_down'));
+        sharebar_votes.append($('<small>').text("500"));
+        shareBar.append(sharebar_votes);
+
+        item_content.append($('<p class="thread">').text(item.author));
+        item_content.append($('<p>').append(item.title));
+        if (!item.urlToImage) {
+            item_content.append($('<img>').attr('src', '../../lib/images/default_news_icon.svg'));
+        } else {
+            item_content.append($('<img onerror="imgError(this)">').attr('src', item.urlToImage));
+        }
+
+        item_container.append(item_content);
+        item_container.append(shareBar);
+        $('.featured').append(item_container);
     });
+    //$(".featured .post-container:nth-child(3n)").addClass('wide');
+}
+
+/**
+ * Randomize array element order in-place.
+ * Using Durstenfeld shuffle algorithm.
+ */
+function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+    return array;
 }
 
 function imgError(image) {
@@ -118,29 +140,9 @@ function closeSource(source) {
     $(parent).find('.post-container').slideToggle(500);
 }
 
-function showArticle(url) {
+var oldTop;
+function showArticle(url, articleID) {
 
-    window.requestAnimationFrame(function () {
-        $('.reader').velocity({
-            'display': 'flex',
-            'height': '100%',
-            opacity: 1,
-            duration: 500
-        });
-        $('.featured').velocity({
-            'display': 'none',
-            'height': '0',
-            opacity: 0,
-            duration: 500
-        });
-        if (localStorage.getItem('dark-mode') == "true") {
-            $('.reader').css('background', '#3e3e3e');
-        }
-        $('.reader').velocity("scroll", { duration: 100, easing: "linear" });
-    });
-    window.requestAnimationFrame(function () {
-        closeAnimation('.featured');
-    });
     fetch('http://api.embed.ly/1/extract?key=08ad220089e14298a88f0810a73ce70a&url=' + url)
         .then(res => {
             if (res.ok) {
@@ -183,18 +185,23 @@ function showArticle(url) {
             $('.reader').html(article_container);
             $('.reader').append($('<a id="back-btn" onclick="closeArticle()">').text('Close'));
         });
+
+    
+    //$('.right-container').velocity({
+    //    'opacity': '0'
+    //});
+    //$('.right-container').velocity({
+    //    'opacity': '1'
+    //});
+    //$('#top').velocity("scroll", { duration: 1500, easing: "spring" })
 }
 function closeArticle() {
-    $('.reader').velocity({
-        'display': 'none',
-        'height': '0',
-        opacity: 0,
-        duration: 500
-    });
-    $('.featured').velocity({
-        'display': 'flex',
-        'height': '100%',
-        opacity: 1,
-        duration: 500
-    });
+    //$('.right-container').velocity({
+    //    'left': '100vw',
+    //    'display': 'none'
+    //});
+    //$('.left-container').velocity({
+    //    'left': '0',
+    //    'display': 'flex'
+    //});
 }

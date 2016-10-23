@@ -12,7 +12,6 @@
     <link href="~/lib/css/flexboxgrid.min.css" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <link href="https://cdn.quilljs.com/1.0.6/quill.snow.css" rel="stylesheet">
     <link href="~/lib/css/site.css" rel="stylesheet" type="text/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
@@ -21,45 +20,53 @@
 <body>
     <header>
         <nav id="top_nav">
-            <ul>
-                <li class="push-right center"><a href="~/">Newly Read</a></li>
+            <ul id="main_nav">
+                <li><a href="~/">Newly Read</a></li>
+                <li class="dropdown">
+                    <div class="dropdown-selector">
+                        <strong>@ViewBag.Title</strong>
+                        <i class="material-icons">keyboard_arrow_down</i>
+                    </div>
+                    <ul class="dropdown-content">
+                        <li><a href="~/Home/Category/?category=business">Business</a></li>
+                        <li><a href="~/Home/Category/?category=entertainment">Entertainment</a></li>
+                        <li><a href="~/Home/Category/?category=gaming">Gaming</a></li>
+                        <li><a href="~/Home/Category/?category=general">General</a></li>
+                        <li><a href="~/Home/Category/?category=music">Music</a></li>
+                        <li><a href="~/Home/Category/?category=science">Science and Nature</a></li>
+                        <li><a href="~/Home/Category/?category=sport">Sports</a></li>
+                        <li><a href="~/Home/Category/?category=technology">Technology</a></li>
+                    </ul>
+                </li>
                 @if (User.Identity.IsAuthenticated) {
                     <li class="float-right"><a href="~/">@Context.User.Identity.Name</a></li>
                 }
-                <li class="float-right"><a href="~/Home/AppSettings"><i class="material-icons">settings</i></a></li>
-            </ul>
-        </nav>
-        <nav id="categories">
-            <ul>
-                <li><a href="~/Home/Category/?id=business">Business</a></li>
-                <li><a href="~/Home/Category/?id=entertainment">Entertainment</a></li>
-                <li><a href="~/Home/Category/?id=gaming">Gaming</a></li>
-                <li><a href="~/Home/Category/?id=general">General</a></li>
-                <li><a href="~/Home/Category/?id=music">Music</a></li>
-                <li><a href="~/Home/Category/?id=science">Science and Nature</a></li>
-                <li><a href="~/Home/Category/?id=sport">Sports</a></li>
-                <li><a href="~/Home/Category/?id=technology">Technology</a></li>
+                <li class="float-right app-settings"><a href="~/Home/AppSettings"><i class="material-icons">settings</i></a></li>
             </ul>
         </nav>
     </header>
 
     <environment names="Development">
         <script src="~/lib/scripts/jquery-3.1.1.js"></script>
-        
+
         <script src="~/lib/scripts/modernizr-2.8.3.js"></script>
         <script src="~/lib/scripts/jquery.sticky.js"></script>
         <script src="~/lib/scripts/velocity.js"></script>
-        <script src="https://cdn.quilljs.com/1.0.6/quill.js"></script>
+        <script src="~/lib/scripts/smoothState.js"></script>
         <script src="~/lib/scripts/index.js"></script>
-        
+
     </environment>
-    <main class="dark-toggle">
-        <div class="reader dark-toggle"></div>
-        @RenderSection("featured", required: false)
-        <section>
+    <main class="dark-toggle" id="main">
+        <section class="left-container">
+            @RenderSection("featured", required: false)
             @RenderBody()
         </section>
+        <span id="top"></span>
+        <aside class="right-container dark-toggle">
+            <div class="reader dark-toggle"></div>
+        </aside>
     </main>
+
 
     <!--<environment names="Production">
         <script src="~/lib/scripts/jquery-3.1.1.min.js"></script>

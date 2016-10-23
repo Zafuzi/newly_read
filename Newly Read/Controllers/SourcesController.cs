@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Newly_Read.Models;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace Newly_Read.Controllers {
     public class SourcesController : Controller {
@@ -19,6 +21,16 @@ namespace Newly_Read.Controllers {
             }else {
                 return View();
             }
+        }
+
+        public string GetArticles(string category) {
+            string result = JsonConvert.SerializeObject(db.Articles.Where(i => i.category == category));
+            return result;
+        }
+
+        public string GetSources() {
+            string result = JsonConvert.SerializeObject(db.Sources);
+            return result;
         }
 
         // GET: Sources/Details/5
