@@ -64,7 +64,8 @@ namespace Newly_Read.Migrations {
                             JToken[] storedSources = key.Children().ToArray();
 
                             if (storedSources == null) {
-                                System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\ErrorLogs.txt", " Time: " + DateTime.Now + "\n Message: No sources were stored in the server. " + " END OF MESSAGE \n\n");
+                                // TODO find appharbor error solution
+                                //System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\ErrorLogs.txt", " Time: " + DateTime.Now + "\n Message: No sources were stored in the server. " + " END OF MESSAGE \n\n");
                                 return;
                             }
                             var stso = storedSources.First().Last().ToString();
@@ -75,7 +76,8 @@ namespace Newly_Read.Migrations {
                             data = JObject.Parse(content);
                             string status = data.Children().First().First().ToString();
                             if (data == null || status == "error") {
-                                System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\ErrorLogs.txt", " Time: " + DateTime.Now + "\n Message: " +  data.ToString()  + " END OF MESSAGE \n\n" );
+                                // TODO find appharbor error solution
+                                //System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\ErrorLogs.txt", " Time: " + DateTime.Now + "\n Message: " +  data.ToString()  + " END OF MESSAGE \n\n" );
                                 continue;
                             }else {
                                 try {
@@ -97,7 +99,8 @@ namespace Newly_Read.Migrations {
                                     }
                                 }
                                 catch (NullReferenceException) {
-                                    System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\Logs\ErrorLogs.txt", " Time: " + DateTime.Now + "\n Exception: " + data.ToString() + " END OF Exception \n\n");
+                                    // TODO find appharbor error solution
+                                    //System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\Logs\ErrorLogs.txt", " Time: " + DateTime.Now + "\n Exception: " + data.ToString() + " END OF Exception \n\n");
                                     throw new Exception(data.ToString());
                                 }
                             }
