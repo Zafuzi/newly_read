@@ -509,15 +509,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\HandleErrorAttribute.cs" />
-    <Compile Include="Migrations\201610230756376_Initial_Create.cs" />
-    <Compile Include="Migrations\201610230756376_Initial_Create.Designer.cs">
-      <DependentUpon>201610230756376_Initial_Create.cs</DependentUpon>
+    <Compile Include="Migrations\201610242304110_InitialCreate.cs" />
+    <Compile Include="Migrations\201610242304110_InitialCreate.Designer.cs">
+      <DependentUpon>201610242304110_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <None Include="Migrations\config_backup.cs" />
     <Compile Include="Models\IdentityModel.cs" />
     <Compile Include="Models\MyDbContext.cs" />
-    <Compile Include="Models\SourceDbInitializer.cs" />
     <Compile Include="Models\Sources.cs" />
     <Compile Include="Models\Articles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -532,8 +530,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201610230756376_Initial_Create.resx">
-      <DependentUpon>201610230756376_Initial_Create.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201610242304110_InitialCreate.resx">
+      <DependentUpon>201610242304110_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

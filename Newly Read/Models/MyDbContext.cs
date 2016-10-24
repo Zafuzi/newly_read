@@ -16,13 +16,8 @@ namespace Newly_Read.Models {
         // For more information refer to the documentation:
         // http://msdn.microsoft.com/en-us/data/jj591621.aspx
 
-        public MyDbContext() : base("name=DefaultConnection") {
+        public MyDbContext() : base("DefaultConnection") {
 
-        }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder) {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<Models.MyDbContext, Migrations.Configuration>());
-            base.OnModelCreating(modelBuilder);
         }
 
         public System.Data.Entity.DbSet<Newly_Read.Models.Sources> Sources { get; set; }

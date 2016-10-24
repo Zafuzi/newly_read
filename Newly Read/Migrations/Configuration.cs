@@ -10,13 +10,9 @@ namespace Newly_Read.Migrations {
     using System.Runtime.CompilerServices;
 
     internal sealed class Configuration : DbMigrationsConfiguration<Newly_Read.Models.MyDbContext> {
-
-        
-
         public Configuration() {
             AutomaticMigrationsEnabled = true;
             AutomaticMigrationDataLossAllowed = true;
-            this.Seed(new Models.MyDbContext());
         }
         protected override void Seed(Newly_Read.Models.MyDbContext context) {
             //  This method will be called after migrating to the latest version.
@@ -31,7 +27,7 @@ namespace Newly_Read.Migrations {
             var content = restResponse.Content;
             JObject data = JObject.Parse(content);
             JToken[] source = data.GetValue("sources").Children().ToArray();
-            bool keep = true;
+            bool keep = false;
             if (keep) {
                 return;
             } else {
@@ -68,6 +64,7 @@ namespace Newly_Read.Migrations {
                             JToken[] storedSources = key.Children().ToArray();
 
                             if (storedSources == null) {
+                                System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\ErrorLogs.txt", " Time: " + DateTime.Now + "\n Message: No sources were stored in the server. " + " END OF MESSAGE \n\n");
                                 return;
                             }
                             var stso = storedSources.First().Last().ToString();
@@ -76,31 +73,35 @@ namespace Newly_Read.Migrations {
                             restResponse = client.Execute(request);
                             content = restResponse.Content;
                             data = JObject.Parse(content);
-
-                            if (data == null) {
-                                return;
-                            }
-                            try {
-                                JToken[] articles = data.GetValue("articles").Children().ToArray();
-                                if (articles == null) {
-                                    return;
+                            string status = data.Children().First().First().ToString();
+                            if (data == null || status == "error") {
+                                System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\ErrorLogs.txt", " Time: " + DateTime.Now + "\n Message: " +  data.ToString()  + " END OF MESSAGE \n\n" );
+                                continue;
+                            }else {
+                                try {
+                                    JToken[] articles = data.GetValue("articles").Children().ToArray();
+                                    if (articles == null) {
+                                        continue;
+                                    }
+                                    foreach (var article in articles) {
+                                        Articles asdf = new Articles {
+                                            author = article.Children().ElementAt(0).Last().ToString(),
+                                            title = article.Children().ElementAt(1).Last().ToString(),
+                                            description = article.Children().ElementAt(2).Last().ToString(),
+                                            url = article.Children().ElementAt(3).Last().ToString(),
+                                            category = storedSources.ElementAt(4).Last.ToString(),
+                                            urlToImage = article.Children().ElementAt(4).Last().ToString(),
+                                            publishedAt = article.Children().ElementAt(5).Last().ToString(),
+                                        };
+                                        context.Articles.AddOrUpdate(p => p.id, asdf);
+                                    }
                                 }
-                                foreach (var article in articles) {
-                                    Articles asdf = new Articles {
-                                        author = article.Children().ElementAt(0).Last().ToString(),
-                                        title = article.Children().ElementAt(1).Last().ToString(),
-                                        description = article.Children().ElementAt(2).Last().ToString(),
-                                        url = article.Children().ElementAt(3).Last().ToString(),
-                                        category = storedSources.ElementAt(4).Last.ToString(),
-                                        urlToImage = article.Children().ElementAt(4).Last().ToString(),
-                                        publishedAt = article.Children().ElementAt(5).Last().ToString(),
-                                    };
-                                    context.Articles.AddOrUpdate(p => p.id, asdf);
+                                catch (NullReferenceException) {
+                                    System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\Logs\ErrorLogs.txt", " Time: " + DateTime.Now + "\n Exception: " + data.ToString() + " END OF Exception \n\n");
+                                    throw new Exception(data.ToString());
                                 }
                             }
-                            catch (NullReferenceException) {
-                                throw new Exception(data.ToString() + "\nInvalid Source: " + stso);
-                            }
+                            
                         }
                     }
                 }
