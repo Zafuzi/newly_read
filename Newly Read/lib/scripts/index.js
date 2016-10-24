@@ -187,12 +187,12 @@ function showArticle(url, articleID) {
         });
 
     
-    //$('.right-container').velocity({
-    //    'opacity': '0'
-    //});
-    //$('.right-container').velocity({
-    //    'opacity': '1'
-    //});
+    $('.right-container').velocity({
+        'opacity': '0'
+    });
+    $('.right-container').velocity({
+        'opacity': '1'
+    });
     //$('#top').velocity("scroll", { duration: 1500, easing: "spring" })
 }
 function closeArticle() {

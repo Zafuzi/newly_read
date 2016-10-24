@@ -1,0 +1,6 @@
+ Time: 10/24/2016 4:25:44 PM
+ Message: {
+  "status": "error",
+  "message": "The news source you've selected (bbc-news) is temporarily unavailable. Please try again shortly."
+} END OF MESSAGE 
+
