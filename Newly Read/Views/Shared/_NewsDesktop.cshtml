@@ -1,0 +1,43 @@
+﻿@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.EntityFramework
+@using Microsoft.Owin.Security
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Newly Read | @ViewBag.Title</title>
+
+    <link href="~/lib/css/normalize.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/css/flexboxgrid.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="~/lib/css/site.css" rel="stylesheet" type="text/css" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+    @RenderPage("~/Views/Shared/_HeaderNavBar.cshtml")
+
+    <environment names="Development">
+        <script src="~/lib/scripts/jquery-3.1.1.js"></script>
+        <script src="~/lib/scripts/modernizr-2.8.3.js"></script>
+        <script src="~/lib/scripts/jquery.sticky.js"></script>
+        <script src="~/lib/scripts/velocity.js"></script>
+        <script src="~/lib/scripts/smoothState.js"></script>
+        <script src="~/lib/scripts/index.js"></script>
+    </environment>
+    <main class="dark-toggle" id="main">
+        <section class="left-container">
+            @RenderSection("featured", required: false)
+            @RenderBody()
+        </section>
+        <span id="top"></span>
+        <aside class="right-container dark-toggle">
+            <div class="reader dark-toggle"></div>
+        </aside>
+    </main>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

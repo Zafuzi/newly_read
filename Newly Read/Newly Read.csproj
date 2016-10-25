@@ -457,7 +457,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_NewsDesktop.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
@@ -486,7 +486,8 @@
     <Content Include="Views\Sources\Index.cshtml" />
     <None Include="Properties\PublishProfiles\AppHarbor.pubxml" />
     <None Include="Properties\PublishProfiles\NewlyRead20161020122911 - Web Deploy.pubxml" />
-    <Content Include="Views\Shared\_ReadMode.cshtml" />
+    <Content Include="Views\Shared\_Default.cshtml" />
+    <Content Include="Views\Shared\_HeaderNavBar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

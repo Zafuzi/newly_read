@@ -1,0 +1,32 @@
+﻿<header>
+    <nav id="top_nav">
+        <a href="~/" id="logo">Newly Read</a>
+        <ul id="main_nav">
+
+            <li class="dropdown">
+                <div class="dropdown-selector">
+                    <strong>@ViewBag.Title</strong>
+                    <i class="material-icons">keyboard_arrow_down</i>
+                </div>
+                <ul class="dropdown-content">
+                    <li><a href="~/Home/Category/?category=business">Business</a></li>
+                    <li><a href="~/Home/Category/?category=entertainment">Entertainment</a></li>
+                    <li><a href="~/Home/Category/?category=gaming">Gaming</a></li>
+                    <li><a href="~/Home/Category/?category=general">General</a></li>
+                    <li><a href="~/Home/Category/?category=music">Music</a></li>
+                    <li><a href="~/Home/Category/?category=science">Science and Nature</a></li>
+                    <li><a href="~/Home/Category/?category=sport">Sports</a></li>
+                    <li><a href="~/Home/Category/?category=technology">Technology</a></li>
+                </ul>
+            </li>
+
+        </ul>
+        <ul id="settings_nav">
+            @if (User.Identity.IsAuthenticated) {
+                <li class="float-right"><a href="~/">@Context.User.Identity.Name</a></li>
+            }
+            <li class="float-right app-settings"><a href="~/Home/AppSettings"><i class="material-icons">settings</i></a></li>
+        </ul>
+    </nav>
+</header>
+

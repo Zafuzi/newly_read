@@ -18,7 +18,6 @@ namespace Newly_Read {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<Models.MyDbContext, Migrations.Configuration>());
 
             var migrator = new DbMigrator(new Migrations.Configuration());
-                Debug.WriteLine(migrator.ToString());
             migrator.Update();
 
             App_Start.WebApiConfig.Configure(RouteTable.Routes);
