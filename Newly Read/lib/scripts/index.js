@@ -1,5 +1,4 @@
-﻿var apiKey = 'ccfdc66609fc4b7b87258020b85d4380';
-var sources = {
+﻿var sources = {
     business: [],
     entertainment: [],
     gaming: [],
@@ -15,14 +14,60 @@ $(function () {
     $("#categories").sticky({ topSpacing: 0 });
     $(".select").sticky({ topSpacing: 0 });
     checkDarkMode();
+    setClickListeners();
 });
+
+function setClickListeners() {
+
+    $('.dropdown').bind("click", function (e) {
+        event.stopPropagation();
+        $('.dropdown-content').css('display', 'none');
+        var thisDropdown = e.currentTarget;
+        var list = $(e.currentTarget).find('ul')[0];
+
+        switch (list.style.display) {
+            case 'none':
+                $(list).css({
+                    'display': 'flex'
+                });
+                break;
+
+            case 'flex':
+                $(list).css({
+                    'display': 'none'
+                });
+                break;
+
+            default:
+                $(list).css({
+                    'display': 'flex'
+                });
+                break;
+        }
+    });
+
+    $(window).click(function (e) {
+        if ($('.dropdown-content').css({
+            'display': 'flex'
+        })) {
+            $('.dropdown-content').css({
+                'display': 'none'
+            });
+        } else {
+            return;
+        }
+    });
+}
+
 function checkDarkMode() {
     var isTrue = localStorage.getItem('dark-mode');
 
     if (isTrue == "true") {
+        $('#dark-check').attr("checked");
         $('.dark-toggle').addClass('dark-mode');
         $('a').addClass('light-link');
     } else {
+        $('#dark-check').attr("unchecked");
         $('.dark-toggle').removeClass('dark-mode');
         $('a').removeClass('light-link');
     }
@@ -31,6 +76,7 @@ function checkDarkMode() {
         isTrue = localStorage.getItem('dark-mode');
         console.log(isTrue);
         $('.dark-toggle').toggleClass('dark-mode');
+
         if (isTrue == "true") {
             localStorage.setItem('dark-mode', "false");
         } else {
@@ -80,6 +126,8 @@ function getSourcesForCategory(category) {
 }
 
 function appendArticle(array) {
+    array = shuffleArray(array);
+
     array.map(function (item, key) {
         var item_container = $('<div class="post-container">');
 
@@ -89,14 +137,22 @@ function appendArticle(array) {
         });
 
         var shareBar = $('<div class="sharebar">');
-        shareBar.append($('<p>').append($('<i class="material-icons">').text('share')));
-        shareBar.append($('<p>').append($('<i class="material-icons">').text('comment')));
+        var shareSaver = $('<p>Save this Article</p>');
+        shareSaver.click(function (e) {
+            console.log(item.url);
+
+            alert("Sorry this feature isn't ready for primetime just yet.");
+        });
+        shareSaver.append($('<i class="material-icons">').text('save'));
+
+        shareBar.append(shareSaver);
+        //shareBar.append($('<p>').append($('<i class="material-icons">').text('comment')));
 
         var sharebar_votes = $('<p>');
         sharebar_votes.append($('<i class="material-icons">').text('keyboard_arrow_up'));
         sharebar_votes.append($('<i class="material-icons">').text('keyboard_arrow_down'));
         sharebar_votes.append($('<small>').text("500"));
-        shareBar.append(sharebar_votes);
+        //shareBar.append(sharebar_votes);
 
         item_content.append($('<p class="thread">').text(item.author));
         item_content.append($('<p>').append(item.title));
@@ -193,7 +249,7 @@ function showArticle(url, articleID) {
         });
     $('.right-container').velocity({
         'opacity': '1'
-    }, { delay: 200, duration: 300});
+    }, { delay: 200, duration: 300 });
     //$('#top').velocity("scroll", { duration: 1500, easing: "spring" })
 }
 function closeArticle() {

@@ -29,6 +29,10 @@ namespace Newly_Read.Controllers {
             ViewBag.Error = error;
             return View("Register");
         }
+        public ActionResult Manage(string error) {
+            ViewBag.Error = error;
+            return View();
+        }
 
         public void CreateUser() {
             // Initialize general page variables

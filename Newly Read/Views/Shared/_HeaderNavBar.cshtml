@@ -22,10 +22,28 @@
 
         </ul>
         <ul id="settings_nav">
-            @if (User.Identity.IsAuthenticated) {
-                <li class="float-right"><a href="~/">@Context.User.Identity.Name</a></li>
-            }
-            <li class="float-right app-settings"><a href="~/Home/AppSettings"><i class="material-icons">settings</i></a></li>
+            <li class="float-right app-settings dropdown">
+                <i class="material-icons">settings</i>
+                <!--<a href="~/Home/AppSettings"></a>-->
+                <ul class="dropdown-content">
+                    @if (User.Identity.IsAuthenticated) {
+                        <li>
+                            <a href="~/Account/Manage" class="clickable">@Context.User.Identity.Name</a>
+                            <a href="~/Account/IdentitySignOut">Sign Out</a>
+                        </li>
+                    } else {
+                        <li><a href="~/Account/Login">Login</a></li>
+                    }
+                    <li class="check-settings">
+                        <a href="#">
+                            <label for="dark-check">
+                                <input type="checkbox" name="dark-check" id="dark-check" />
+                                Dark Mode
+                            </label>
+                        </a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </nav>
 </header>
