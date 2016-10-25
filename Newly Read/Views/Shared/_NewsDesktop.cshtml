@@ -27,6 +27,7 @@
         <script src="~/lib/scripts/smoothState.js"></script>
         <script src="~/lib/scripts/index.js"></script>
     </environment>
+
     <main class="dark-toggle" id="main">
         <section class="left-container">
             @RenderSection("featured", required: false)
@@ -34,10 +35,13 @@
         </section>
         <span id="top"></span>
         <aside class="right-container dark-toggle">
-            <div class="reader dark-toggle"></div>
+            <div class="reader dark-toggle">
+                <p class="banner-no-image">Click on an article on the left to get started.</p>
+            </div>
         </aside>
     </main>
 
+    
     @RenderSection("Scripts", required: false)
 </body>
 </html>

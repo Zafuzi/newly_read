@@ -116,6 +116,19 @@ hr {
     background-size: cover;
     background-position: center;
 }
+.banner-no-image {
+    width: 100vw;
+    margin: 0;
+    height: 100%;
+    display: flex;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: absolute;
+    background-size: cover;
+    background-position: center;
+}
 
     .banner .message {
         background: rgba(10,10,10,.5);

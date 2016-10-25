@@ -142,7 +142,13 @@ function closeSource(source) {
 
 var oldTop;
 function showArticle(url, articleID) {
-
+    $('.banner-no-image').velocity({
+        'opacity': '0',
+        'display': 'none'
+    });
+    $('.right-container').velocity({
+        'opacity': '0',
+    }, { duration: 100 });
     fetch('http://api.embed.ly/1/extract?key=08ad220089e14298a88f0810a73ce70a&url=' + url)
         .then(res => {
             if (res.ok) {
@@ -185,14 +191,9 @@ function showArticle(url, articleID) {
             $('.reader').html(article_container);
             $('.reader').append($('<a id="back-btn" onclick="closeArticle()">').text('Close'));
         });
-
-    
-    $('.right-container').velocity({
-        'opacity': '0'
-    });
     $('.right-container').velocity({
         'opacity': '1'
-    });
+    }, { delay: 200, duration: 300});
     //$('#top').velocity("scroll", { duration: 1500, easing: "spring" })
 }
 function closeArticle() {
