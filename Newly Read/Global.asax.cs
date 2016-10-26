@@ -20,7 +20,7 @@ namespace Newly_Read {
 
             System.Timers.Timer aTimer = new System.Timers.Timer();
             aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-            aTimer.Interval = (1000 * 60);
+            aTimer.Interval = (5000 * 60);
             aTimer.Enabled = true;
 
             App_Start.WebApiConfig.Configure(RouteTable.Routes);
