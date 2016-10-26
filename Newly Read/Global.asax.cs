@@ -8,6 +8,7 @@ using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Timers;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -17,12 +18,18 @@ namespace Newly_Read {
         protected void Application_Start(object sender, EventArgs e) {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<Models.MyDbContext, Migrations.Configuration>());
 
-            var migrator = new DbMigrator(new Migrations.Configuration());
-            migrator.Update();
+            System.Timers.Timer aTimer = new System.Timers.Timer();
+            aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
+            aTimer.Interval = (1000 * 60);
+            aTimer.Enabled = true;
 
             App_Start.WebApiConfig.Configure(RouteTable.Routes);
             App_Start.FilterConfig.Configure(GlobalFilters.Filters);
             App_Start.RouteConfig.Configure(RouteTable.Routes);
+        }
+        private static void OnTimedEvent(object source, ElapsedEventArgs e) {
+            var migrator = new DbMigrator(new Migrations.Configuration());
+            migrator.Update();
         }
         protected void Session_Start(object sender, EventArgs e) {
 

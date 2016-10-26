@@ -63,7 +63,7 @@ function checkDarkMode() {
     var isTrue = localStorage.getItem('dark-mode');
 
     if (isTrue == "true") {
-        $('#dark-check').attr("checked");
+        $('#dark-check').attr("checked","true");
         $('.dark-toggle').addClass('dark-mode');
         $('a').addClass('light-link');
     } else {
@@ -74,7 +74,6 @@ function checkDarkMode() {
 
     $('#dark-check').change(function (e) {
         isTrue = localStorage.getItem('dark-mode');
-        console.log(isTrue);
         $('.dark-toggle').toggleClass('dark-mode');
 
         if (isTrue == "true") {
@@ -126,7 +125,8 @@ function getSourcesForCategory(category) {
 }
 
 function appendArticle(array) {
-    array = shuffleArray(array);
+    // Used to shuffle array order
+    //array = shuffleArray(array);
 
     array.map(function (item, key) {
         var item_container = $('<div class="post-container">');
@@ -243,6 +243,7 @@ function showArticle(url, articleID) {
             article_container.append(article_title);
             article_container.append(attribution_header);
             article_container.append(json.content);
+
 
             $('.reader').html(article_container);
             $('.reader').append($('<a id="back-btn" onclick="closeArticle()">').text('Close'));
