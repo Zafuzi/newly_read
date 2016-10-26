@@ -28,8 +28,6 @@ namespace Newly_Read.App_Start {
             });
 
             AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.NameIdentifier;
-
-            Database.SetInitializer(new CreateDatabaseIfNotExists<Models.MyDbContext>());
         }
     }
 }
