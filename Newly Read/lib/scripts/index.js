@@ -214,15 +214,16 @@ function showArticle(url, articleID) {
             }
         })
         .then(json => {
+            
             var article_container = $('<div class="article-container dark-toggle">');
             if (!json) {
                 article_container.append($('<h4>').text('Sorry, but it looks like that article is not longer available.'));
                 article_container.append($('<p>').text('Here is the link for the original article: ' + url));
                 $('.reader').html(article_container);
                 $('.reader').append($('<a id="back-btn" onclick="closeArticle()">').text('Close'));
-                return false;
+                return;
             }
-
+            
             var article_title = $('<div>');
             article_title.append($('<h3>').text(json.title));
 
@@ -243,6 +244,8 @@ function showArticle(url, articleID) {
             article_container.append(article_title);
             article_container.append(attribution_header);
             article_container.append(json.content);
+
+            console.log(json);
 
 
             $('.reader').html(article_container);
