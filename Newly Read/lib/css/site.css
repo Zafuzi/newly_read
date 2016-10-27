@@ -21,6 +21,7 @@ header {
     flex-flow: row;
     margin: 0;
     padding: 0;
+    height: 48px;
     align-items: center;
     justify-content: space-around;
     width: 100vw;
@@ -93,41 +94,57 @@ main {
         padding: 0;
     }
 
-    #top_nav #settings_nav {
-        list-style-type: none;
-        display: inline-flex;
-        justify-content: flex-end;
-        align-items: center;
-        flex: 0 0 calc(15% - 1em);
-        margin: 0 .5em;
+    .retro {
+        -webkit-box-sizing: content-box;
+        -moz-box-sizing: content-box;
+        box-sizing: content-box;
+        margin: 0 auto;
+        border: none;
+        font: lighter 1.5rem/lighter "Anton", Helvetica, sans-serif;
+        color: #fff;
+        text-align: center;
+        text-transform: uppercase;
+        -o-text-overflow: clip;
+        text-overflow: clip;
+        letter-spacing: 2px;
+        /*text-shadow: 1px 1px 1px rgba(84,84,84,0.56);*/
+    }
+
+#top_nav #settings_nav {
+    list-style-type: none;
+    display: inline-flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex: 0 0 calc(15% - 1em);
+    margin: 0 .5em;
+    height: 100%;
+    padding: 0;
+}
+
+#top_nav #main_nav {
+    list-style-type: none;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex: 0 0 calc(70% - 1em);
+    margin: 0 .5em;
+    padding: 0;
+}
+
+    #top_nav #main_nav li {
         height: 100%;
-        padding: 0;
-    }
-
-    #top_nav #main_nav {
-        list-style-type: none;
         display: inline-flex;
-        justify-content: center;
+        color: inherit;
+        justify-content: flex-start;
         align-items: center;
-        flex: 0 0 calc(70% - 1em);
-        margin: 0 .5em;
-        padding: 0;
     }
 
-        #top_nav #main_nav li {
-            height: 100%;
+        #top_nav #main_nav li a {
             display: inline-flex;
-            color: inherit;
             justify-content: flex-start;
             align-items: center;
+            height: 100%;
         }
-
-            #top_nav #main_nav li a {
-                display: inline-flex;
-                justify-content: flex-start;
-                align-items: center;
-                height: 100%;
-            }
 
 /* Navigation Menu Dropdown */
 .dropdown {
@@ -359,26 +376,33 @@ main {
     -ms-overflow-style: none;
 }
 
+.inner_nav{
+    flex: 0 0 100%;
+    display: flex;
+    width: 100vw;
+    color: white;
+    z-index: 99;
+    background: #804ed8;
+    height: 0;
+}
 /* Containers */
 .right-container {
     display: flex;
     flex: 0 0 calc(70vw - 1em);
+    flex-flow: column;
     width: inherit;
     margin: 0;
     padding-bottom: 100px;
-    height: 100%;
-    min-height: 100%;
-    overflow: hidden;
+    overflow: scroll;
+    align-items: flex-start;
+    background: #fefdfb;
 }
 
     .right-container .reader {
         flex: 0 0 calc(70% -1em);
         width: 70%;
         padding: .5em;
-        height: calc(100% - 10em);
-        overflow: auto;
         padding-bottom: 100vh;
-        text-overflow: ellipsis;
         align-content: flex-start;
         justify-content: flex-start;
     }
@@ -445,17 +469,12 @@ main {
 
 /* Utilities */
 #back-btn {
-    display: none;
-    font-size: 1.1rem;
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-    background: #fff;
-    border-radius: 50%;
-    color: #22304b;
-    height: 48px;
-    width: 48px;
+    display: flex;
+    font-size: 1.2rem;
+    position: relative;
+    color: inherit;
     line-height: 2;
+    opacity: 0;
     align-items: center;
     justify-content: center;
 }
@@ -608,6 +627,26 @@ input {
 
     .left-container {
         flex: 0 0 100%;
+        width: 100%;
+        position: absolute;
+        left: 0;
+        max-height: 100%;
+    }
+    .right-container {
+        position: fixed;
+        left: 100vw;
+        display: flex;
+        width: 100%;
+        max-height: 100%;
+        flex: 0 0 100%;
+        z-index: 1;
+    }
+    .right-container .reader{
+        width: 90%;
+        margin: auto;
+    }
+    .retro{
+        display: none;
     }
 }
 
@@ -615,5 +654,8 @@ input {
     .article-container img {
         width: 50% !important;
         margin-left: calc(25% - 1em);
+    }
+    .inner_nav{
+        display: none;
     }
 }

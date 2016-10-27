@@ -7,12 +7,11 @@
     science: [],
     sport: [],
     technology: [],
-}
+};
 
 $(function () {
     getSources();
     $("#categories").sticky({ topSpacing: 0 });
-    $(".select").sticky({ topSpacing: 0 });
     checkDarkMode();
     setClickListeners();
 });
@@ -63,7 +62,7 @@ function checkDarkMode() {
     var isTrue = localStorage.getItem('dark-mode');
 
     if (isTrue == "true") {
-        $('#dark-check').attr("checked","true");
+        $('#dark-check').attr("checked", "true");
         $('.dark-toggle').addClass('dark-mode');
         $('a').addClass('light-link');
     } else {
@@ -196,15 +195,29 @@ function closeSource(source) {
     $(parent).find('.post-container').slideToggle(500);
 }
 
-var oldTop;
 function showArticle(url, articleID) {
-    $('.banner-no-image').velocity({
-        'opacity': '0',
-        'display': 'none'
-    });
-    $('.right-container').velocity({
-        'opacity': '0',
-    }, { duration: 100 });
+
+    if (window.innerWidth > 768) {
+        $('.right-container').velocity({
+            'opacity': '0',
+        }, { duration: 100 });
+    } else {
+        $('.left-container').velocity({
+            'position': 'fixed'
+        }, { duration: 250, delay: 200 });
+
+        $('.inner_nav').velocity({
+            'display': 'flex',
+            'height': '32px'
+        }, { duration: 250, delay: 50 });
+        $('#back-btn').velocity({
+            'opacity': '1'
+        }, { duration: 250, delay: 50 });
+        $('header').velocity({
+            'height': '0'
+        }, { duration: 250, delay: 200 });
+    }
+
     fetch('http://api.embed.ly/1/extract?key=08ad220089e14298a88f0810a73ce70a&url=' + url)
         .then(res => {
             if (res.ok) {
@@ -214,16 +227,14 @@ function showArticle(url, articleID) {
             }
         })
         .then(json => {
-            
             var article_container = $('<div class="article-container dark-toggle">');
             if (!json) {
                 article_container.append($('<h4>').text('Sorry, but it looks like that article is not longer available.'));
                 article_container.append($('<p>').text('Here is the link for the original article: ' + url));
                 $('.reader').html(article_container);
-                $('.reader').append($('<a id="back-btn" onclick="closeArticle()">').text('Close'));
                 return;
             }
-            
+
             var article_title = $('<div>');
             article_title.append($('<h3>').text(json.title));
 
@@ -231,8 +242,8 @@ function showArticle(url, articleID) {
             if (json.authors) {
                 json.authors.map(author => {
                     article_authors.append($('<span>').text(author.name));
-                })
-            }
+                });
+            };
 
             article_title.append(article_authors);
 
@@ -245,24 +256,46 @@ function showArticle(url, articleID) {
             article_container.append(attribution_header);
             article_container.append(json.content);
 
-            console.log(json);
-
-
             $('.reader').html(article_container);
-            $('.reader').append($('<a id="back-btn" onclick="closeArticle()">').text('Close'));
+            $('.reader').prepend($('<span id="top">'));
         });
-    $('.right-container').velocity({
-        'opacity': '1'
-    }, { delay: 200, duration: 300 });
-    //$('#top').velocity("scroll", { duration: 1500, easing: "spring" })
+
+    if (window.innerWidth > 768) {
+        $('.right-container').velocity({
+            'opacity': '1'
+        }, { duration: 250, delay: 350 });
+    } else {
+        $('.right-container').velocity({
+            'display': 'flex',
+            'left': '0'
+        }, { duration: 250, delay: 200 });
+    }
 }
 function closeArticle() {
-    //$('.right-container').velocity({
-    //    'left': '100vw',
-    //    'display': 'none'
-    //});
-    //$('.left-container').velocity({
-    //    'left': '0',
-    //    'display': 'flex'
-    //});
+    if (window.innerWidth > 768) {
+        $('.right-container').velocity({
+            'opacity': '0',
+        }, { duration: 250, delay: 50 });
+    } else {
+        $('.left-container').velocity({
+            'display': 'flex',
+            'left': '0'
+        }, { duration: 250, delay: 50 });
+        $('.right-container').velocity({
+            'display': 'none',
+            'left': '100vw'
+        }, { duration: 250, delay: 50 });
+        $('.inner_nav').velocity({
+            'height': '0'
+        }, { duration: 250, delay: 50 });
+        $('#back-btn').velocity({
+            'opacity': '0'
+        }, { duration: 250, delay: 50 });
+        $('header').velocity({
+            'height': '48px'
+        }, { duration: 250, delay: 200 });
+    }
+    setTimeout(function () {
+        $(".reader").html('');
+    }, 250);
 }
