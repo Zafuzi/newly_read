@@ -14,6 +14,7 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <link href="~/lib/css/site.css" rel="stylesheet" type="text/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link async href="http://fonts.googleapis.com/css?family=Anton" data-generated="http://enjoycss.com" rel="stylesheet" type="text/css" />
     <meta name="viewport" content="width=device-width" />
 </head>
 <body>
@@ -27,23 +28,26 @@
         <script src="~/lib/scripts/smoothState.js"></script>
         <script src="~/lib/scripts/index.js"></script>
     </environment>
-
+    
     <main class="dark-toggle" id="main">
         <section class="left-container">
             @RenderSection("featured", required: false)
             @RenderBody()
         </section>
-        <span id="top"></span>
+        <div class="inner_nav">
+            @* Add code for back to top button *@
+            <a id="back-btn" onclick="closeArticle()">
+                <i class="material-icons">arrow_back</i>
+            </a>
+        </div>
         <aside class="right-container dark-toggle">
             <div class="reader">
                 <h4 class="card">Click on an article on the left to get started.</h4>
             </div>
-            <div class="side_nav">
-            </div>
         </aside>
     </main>
 
-    
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>
