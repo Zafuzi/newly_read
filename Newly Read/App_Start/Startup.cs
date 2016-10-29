@@ -8,13 +8,30 @@ using System.Web.Helpers;
 using System.Security.Claims;
 using Newly_Read.Controllers;
 using System.Data.Entity;
+using Stormpath.SDK;
+using Stormpath.SDK.Account;
+using Stormpath.SDK.Client;
+using Stormpath.SDK.Error;
+using System.Diagnostics;
+using Microsoft.ApplicationInsights.Extensibility;
+using Stormpath.AspNet;
+using Stormpath.Configuration.Abstractions;
 
 [assembly: OwinStartup(typeof(Newly_Read.App_Start.Startup))]
 namespace Newly_Read.App_Start {
     public partial class Startup {
+
         public void Configuration(IAppBuilder app) {
+            DisableApplicationInsightsOnDebug();
             ConfigureAuth(app);
-            
+        }
+
+        /// <summary>
+        /// Disables the application insights locally.
+        /// </summary>
+        [Conditional("DEBUG")]
+        private static void DisableApplicationInsightsOnDebug() {
+            TelemetryConfiguration.Active.DisableTelemetry = true;
         }
 
         // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
@@ -27,7 +44,27 @@ namespace Newly_Read.App_Start {
                 LoginPath = new PathString("/Account/Login")
             });
 
-            AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.NameIdentifier;
+            app.UseStormpath(new StormpathConfiguration() {
+                Application = new ApplicationConfiguration() {
+                    Href = "https://api.stormpath.com/v1/applications/62B2kYdwnBf3mNunfBxMTG"
+                },
+                Client = new ClientConfiguration() {
+                    ApiKey = new ClientApiKeyConfiguration() {
+                        Id = "4RSZV4PM99VG4YNT4MW5OUNMS",
+                        Secret = "wRb1UOvPqqKJO+yvEMsPedUVJGmMgwHt5p/hGFQXz9g"
+                    }
+                },
+                Web = new WebConfiguration() {
+                    Register = new WebRegisterRouteConfiguration() {
+                        Enabled = false
+                    },
+                    Login = new WebLoginRouteConfiguration() {
+                        Enabled = true,
+                        View = "Account/Login",
+                        Uri = "Account/Login"
+                    }
+                }
+            });
         }
     }
 }

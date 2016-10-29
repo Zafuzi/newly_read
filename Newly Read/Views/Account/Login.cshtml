@@ -1,34 +1,17 @@
 ﻿@{
-    ViewBag.Title = "Log in";
+    Layout = null;
 }
-@section featured{
-    <div class="banner-no-image">
-        <div class="form message">
-            <h2>Log in to Your Account</h2>
-            @if (ViewBag.Error != null) {
-                <p class="warning">@ViewBag.Error</p>
-            }
-            <form action="~/Account/LoginUser" method="post">
-                <ul>
-                    <li>
-                        <label for="userName"> User name</label>
-                        <input type="text" id="userName" name="userName" />
-                    </li>
-                    <li>
-                        <label for="password">Password</label>
-                        <input type="password" id="password" name="password" />
-                    </li>
-                </ul>
-                <input type="submit" class="btn" value="Log in" />
-            </form>
-            <p>
-                <a href="~/Account/Register">Make an account</a>
-                <a href="~/Account/ForgotPassword">Reset your password</a>
-            </p>
-        </div>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+    
     </div>
-}
-
-
-
-
+</body>
+</html>

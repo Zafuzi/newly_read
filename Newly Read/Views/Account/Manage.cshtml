@@ -1,9 +1,17 @@
 ﻿@{
     ViewBag.Title = "Manage";
 }
+
 @section featured{
-    <div>
-        <h1>Sorry this page is not ready yet</h1>
+    <div class="featured">
+        @if (Context.User.Identity.IsAuthenticated) {
+            <h2>Manage your account.</h2>
+            <div class="card container" style="max-height:300px; width: 100px;">
+                <img class="user-pic" src="https://unsplash.it/100/100" />
+                <h3>@Context.User.Identity.Name</h3>
+            </div>
+        } else {
+            <h2>Login to manage your account.</h2>
+        }
     </div>
 }
-

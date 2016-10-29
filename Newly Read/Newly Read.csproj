@@ -357,12 +357,28 @@
       <HintPath>..\packages\RestSharp.105.2.3\lib\net452\RestSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Stormpath.AspNet, Version=0.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Stormpath.AspNet.0.7.0\lib\net45\Stormpath.AspNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Stormpath.Configuration, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Stormpath.Configuration.6.0.0\lib\net45\Stormpath.Configuration.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Stormpath.Configuration.Abstractions, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Stormpath.Configuration.Abstractions.6.0.0\lib\net45\Stormpath.Configuration.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Stormpath.Owin.Abstractions, Version=1.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Stormpath.Owin.Abstractions.1.7.0\lib\net45\Stormpath.Owin.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Stormpath.Owin.Middleware, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Stormpath.Owin.Middleware.3.0.0\lib\net45\Stormpath.Owin.Middleware.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Stormpath.Owin.Views.Precompiled, Version=0.4.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Stormpath.Owin.Views.Precompiled.0.4.2\lib\net45\Stormpath.Owin.Views.Precompiled.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Stormpath.SDK.Abstractions, Version=0.94.2.0, Culture=neutral, processorArchitecture=MSIL">
@@ -416,6 +432,10 @@
     </Reference>
     <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.Owin, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.3\lib\net45\System.Web.Http.Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -515,8 +535,6 @@
     <Content Include="Views\Home\Category.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Home\AppSettings.cshtml" />
     <Content Include="Views\Home\Comments.cshtml" />
     <Content Include="Views\Sources\Create.cshtml" />
@@ -528,6 +546,7 @@
     <None Include="Properties\PublishProfiles\NewlyRead20161020122911 - Web Deploy.pubxml" />
     <Content Include="Views\Shared\_Default.cshtml" />
     <Content Include="Views\Shared\_HeaderNavBar.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Manage.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
