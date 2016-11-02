@@ -13,6 +13,8 @@
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <link async href="http://fonts.googleapis.com/css?family=Anton" data-generated="http://enjoycss.com" rel="stylesheet" type="text/css" />
 
+    @RenderSection("styles", required: false)
+
     <meta name="viewport" content="width=device-width" />
 </head>
 <body>
@@ -27,9 +29,7 @@
     </environment>
     <main class="dark-toggle">
         @RenderSection("featured", required: false)
-        <section>
-            @RenderBody()
-        </section>
+        @RenderBody()
     </main>
 
     @RenderSection("Scripts", required: false)

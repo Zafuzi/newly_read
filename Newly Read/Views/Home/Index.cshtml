@@ -1,13 +1,29 @@
 ﻿@{
     ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_NewsDesktop.cshtml";
+}
+@section styles{
+    <link rel="stylesheet" href="~/lib/css/flexoverride.css" />
 }
 
 @section featured {
-    <div class="banner dark-toggle">
+    <div class="banner-short dark-toggle">
         <div class="message">
             <h1>Newly Read</h1>
             <h2>Fresh. News. Now.</h2>
             <p>Pick a category above to get started.</p>
         </div>
     </div>
+    <h2>Popular Articles</h2>
+    <div id="popular">
+    </div>
+}
+
+@section scripts{
+    <script>
+        $(function () {
+            appendPopular();
+            $("header").sticky({ topSpacing: 0 });
+        });
+    </script>
 }

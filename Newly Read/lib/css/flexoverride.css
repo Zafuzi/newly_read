@@ -1,0 +1,54 @@
+﻿body {
+    overflow: scroll;
+    overflow-x: hidden;
+    max-height: 100vh;
+}
+header{
+    position: absolute;
+    z-index: 99;
+}
+.dropdown{
+    z-index: 99;
+}
+main{
+    display: block;
+    width: 100vw;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+main h2{
+    text-align: center;
+}
+.left-container{
+    overflow-x: hidden;
+}
+.post-container{
+    width: 50%;
+    flex: 0 0 calc(50% - 1em);
+}
+.inner_nav{
+    position: fixed;
+    top: 48px;
+    display: block;
+    z-index: 98;
+}
+.right-container{
+    position: absolute;
+    z-index: -1;
+    max-height: 100vh;
+    margin: auto;
+    min-height: 100vh;
+    top: 48px;
+}
+.right-container .reader{
+    flex: 0 0 calc(50% - 1em);
+    width: 50%;
+    margin: auto;
+}
+.right-container .reader .article-container h2{
+    font-size: 1.2rem;
+}
+.right-container .reader .article-container{
+    width: 100%;
+    padding-bottom: 5em;
+}

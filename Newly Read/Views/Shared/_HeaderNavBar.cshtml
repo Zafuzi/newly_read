@@ -30,10 +30,14 @@
                     @if (User.Identity.IsAuthenticated) {
                         <li>
                             <a href="~/Account/Manage" class="clickable">@Context.User.Identity.Name</a>
-                            <a href="~/Account/IdentitySignOut">Sign Out</a>
+                            <form action="/logout" method="post" id="logout_form">
+                                <a onclick="document.getElementById('logout_form').submit();" style="cursor: pointer;">
+                                    Log Out
+                                </a>
+                            </form>
                         </li>
                     } else {
-                        <li><a href="~/Account/Login">Login</a></li>
+                        <li><a href="~/login">Login</a></li>
                     }
                     <li class="check-settings">
                         <a href="#">

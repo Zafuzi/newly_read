@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Newly_Read.Models;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace Newly_Read.Controllers {
     public class SourcesController : Controller {
@@ -16,15 +17,18 @@ namespace Newly_Read.Controllers {
 
         // GET: Sources
         public ActionResult Index() {
-            if(db.Sources.Count() > 0) {
+            if (db.Sources.Count() > 0) {
                 return View(db.Sources.ToList());
-            }else {
+            } else {
                 return View();
             }
         }
 
         public string GetArticles(string category) {
-            string result = JsonConvert.SerializeObject(db.Articles.Where(i => i.category == category));
+            string result = JsonConvert.SerializeObject("[{message: There was an error obtaining the source material}]");
+            if (db.Articles != null) {
+                result = JsonConvert.SerializeObject(db.Articles.Where(i => i.category == category));
+            }
             return result;
         }
 
@@ -33,88 +37,40 @@ namespace Newly_Read.Controllers {
             if (db.Sources != null) {
                 result = JsonConvert.SerializeObject(db.Sources);
             }
-            
             return result;
         }
 
-        // GET: Sources/Details/5
-        public ActionResult Details(int? id) {
-            if (id == null) {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        public string GetPopular() {
+            string result = JsonConvert.SerializeObject("[{message: There was an error obtaining the source material}]");
+            if (db.PopularArticle != null) {
+                result = JsonConvert.SerializeObject(db.PopularArticle.OrderByDescending(i => i.popularity));
             }
-            Sources sources = db.Sources.Find(id);
-            if (sources == null) {
-                return HttpNotFound();
-            }
-            return View(sources);
+            return result;
         }
 
-        // GET: Sources/Create
-        public ActionResult Create() {
-            return View();
-        }
-
-        // POST: Sources/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,sourceID,id,description,url,category,language,country,urlsToLogos,sortsBysAvailable")] Sources sources) {
-            if (ModelState.IsValid) {
-                db.Sources.Add(sources);
+        public string AddToPopular(string url) {
+            string result = JsonConvert.SerializeObject("[{message: There was an error obtaining the source material}]");
+            if (url != null && db.Articles != null) {
+                Articles art = db.Articles.Where(i => i.url == url).ToList()[0];
+                PopularArticle pa = new PopularArticle {
+                    author = art.author,
+                    description = art.description,
+                    publishedAt = art.publishedAt,
+                    title = art.title,
+                    url = art.url,
+                    urlToImage = art.urlToImage,
+                    category = art.category,
+                    popularity = 1
+                };
+                if(db.PopularArticle.Where(i => i.url == url).ToArray().Length > 0) {
+                    db.PopularArticle.Where(i => i.url == url).ToList()[0].popularity++;
+                } else {
+                    db.PopularArticle.Add(pa);
+                }
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                result = JsonConvert.SerializeObject(pa);
             }
-
-            return View(sources);
-        }
-
-        // GET: Sources/Edit/5
-        public ActionResult Edit(int? id) {
-            if (id == null) {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Sources sources = db.Sources.Find(id);
-            if (sources == null) {
-                return HttpNotFound();
-            }
-            return View(sources);
-        }
-
-        // POST: Sources/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,sourceID,id,description,url,category,language,country,urlsToLogos,sortsBysAvailable")] Sources sources) {
-            if (ModelState.IsValid) {
-                db.Entry(sources).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(sources);
-        }
-
-        // GET: Sources/Delete/5
-        public ActionResult Delete(int? id) {
-            if (id == null) {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Sources sources = db.Sources.Find(id);
-            if (sources == null) {
-                return HttpNotFound();
-            }
-            return View(sources);
-        }
-
-        // POST: Sources/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id) {
-            Sources sources = db.Sources.Find(id);
-            db.Sources.Remove(sources);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            return result;
         }
 
         protected override void Dispose(bool disposing) {

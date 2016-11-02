@@ -16,6 +16,7 @@ using System.Diagnostics;
 using Microsoft.ApplicationInsights.Extensibility;
 using Stormpath.AspNet;
 using Stormpath.Configuration.Abstractions;
+using System.Collections.Generic;
 
 [assembly: OwinStartup(typeof(Newly_Read.App_Start.Startup))]
 namespace Newly_Read.App_Start {
@@ -41,7 +42,7 @@ namespace Newly_Read.App_Start {
             // Enable the application to use a cookie to store information for the signed in user
             app.UseCookieAuthentication(new CookieAuthenticationOptions {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/Account/Login")
+                LoginPath = new PathString("/login")
             });
 
             app.UseStormpath(new StormpathConfiguration() {
@@ -56,12 +57,10 @@ namespace Newly_Read.App_Start {
                 },
                 Web = new WebConfiguration() {
                     Register = new WebRegisterRouteConfiguration() {
-                        Enabled = false
+                        Enabled = true
                     },
                     Login = new WebLoginRouteConfiguration() {
-                        Enabled = true,
-                        View = "Account/Login",
-                        Uri = "Account/Login"
+                        Enabled = true
                     }
                 }
             });

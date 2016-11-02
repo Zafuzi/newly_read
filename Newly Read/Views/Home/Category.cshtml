@@ -3,12 +3,21 @@
     ViewBag.Title = category;
     Layout = "~/Views/Shared/_NewsDesktop.cshtml";
 }
-
+@section styles{
+    <link rel="stylesheet" href="~/lib/css/flexoverride.css" />
+}
 
 @section featured{
+    <h2>@ViewBag.Title</h2>
     <div class="featured"></div>
+}
 
-    <script defer type="text/javascript">
-        getSourcesForCategory('@category');
+
+@section scripts{
+    <script>
+        $(function () {
+            $("header").sticky({ topSpacing: 0 });
+            getSourcesForCategory('@category');
+        });
     </script>
 }

@@ -1,17 +1,14 @@
 ﻿@{
-    Layout = null;
+    ViewBag.Title = "Login";
+}
+@section featured{
+    <div>
+        <h1>Login</h1>
+        <form action="/logout" method="post" id="logout_form">
+            <a onclick="document.getElementById('logout_form').submit();" style="cursor: pointer;">
+                Log Out
+            </a>
+        </form>
+    </div>
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title></title>
-</head>
-<body>
-    <div>
-    
-    </div>
-</body>
-</html>

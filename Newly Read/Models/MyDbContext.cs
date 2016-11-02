@@ -22,5 +22,6 @@ namespace Newly_Read.Models {
 
         public System.Data.Entity.DbSet<Newly_Read.Models.Sources> Sources { get; set; }
         public System.Data.Entity.DbSet<Newly_Read.Models.Articles> Articles { get; set; }
+        public System.Data.Entity.DbSet<Newly_Read.Models.PopularArticle> PopularArticle { get; set; }
     }
 }

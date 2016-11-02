@@ -8,6 +8,9 @@ namespace Newly_Read.Controllers
 {
     public class AccountController : Controller
     {
+        public ActionResult Login() {
+            return View();
+        }
         // GET: Account
         public ActionResult Manage()
         {

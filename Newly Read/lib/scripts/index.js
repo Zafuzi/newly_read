@@ -10,6 +10,11 @@
 };
 
 $(function () {
+    if ($.support.ajax) {
+        console.log("Supported");
+    } else {
+        console.log("Not Supported");
+    }
     getSources();
     $("#categories").sticky({ topSpacing: 0 });
     checkDarkMode();
@@ -17,21 +22,22 @@ $(function () {
 });
 
 function setClickListeners() {
-
+    $('.dropdown-content').css('display', 'none');
     $('.dropdown').bind("click", function (e) {
         event.stopPropagation();
         $('.dropdown-content').css('display', 'none');
+
         var thisDropdown = e.currentTarget;
         var list = $(e.currentTarget).find('ul')[0];
 
         switch (list.style.display) {
             case 'none':
                 $(list).css({
-                    'display': 'flex'
+                    'display': 'block'
                 });
                 break;
 
-            case 'flex':
+            case 'block':
                 $(list).css({
                     'display': 'none'
                 });
@@ -39,16 +45,14 @@ function setClickListeners() {
 
             default:
                 $(list).css({
-                    'display': 'flex'
+                    'display': 'none'
                 });
                 break;
         }
     });
 
     $(window).click(function (e) {
-        if ($('.dropdown-content').css({
-            'display': 'flex'
-        })) {
+        if ($('.dropdown-content').css('display', 'block')) {
             $('.dropdown-content').css({
                 'display': 'none'
             });
@@ -85,22 +89,28 @@ function checkDarkMode() {
 
 // Get the list of sources
 function getSources() {
-    $.get('../../Sources/GetSources')
-    .done(function (res) {
-        res = JSON.parse(res);
-        res.map(function (source) {
-            switch (source.category) {
-                case 'business': sources.business.push(source); break;
-                case 'entertainment': sources.entertainment.push(source); break;
-                case 'gaming': sources.gaming.push(source); break;
-                case 'general': sources.general.push(source); break;
-                case 'music': sources.music.push(source); break;
-                case 'science-and-nature': sources.science.push(source); break;
-                case 'sport': sources.sport.push(source); break;
-                case 'technology': sources.technology.push(source); break;
-            }
-        });
-        localStorage.setItem('sources', JSON.stringify(sources));
+    $.ajax({
+        url: "../../Sources/GetSources",
+        dataType: 'json',
+        success: function (json) {
+            console.log("Successfully fetched sources: ", json);
+            json.map(function (source) {
+                switch (source.category) {
+                    case 'business': sources.business.push(source); break;
+                    case 'entertainment': sources.entertainment.push(source); break;
+                    case 'gaming': sources.gaming.push(source); break;
+                    case 'general': sources.general.push(source); break;
+                    case 'music': sources.music.push(source); break;
+                    case 'science-and-nature': sources.science.push(source); break;
+                    case 'sport': sources.sport.push(source); break;
+                    case 'technology': sources.technology.push(source); break;
+                }
+            });
+            localStorage.setItem('sources', JSON.stringify(sources));
+        },
+        error: function (e) {
+            console.log("Error: ", e);
+        }
     });
 }
 
@@ -114,11 +124,10 @@ function getSourcesForCategory(category) {
             })
             .done(function (res) {
                 res = JSON.parse(res);
-                console.log(res);
                 res.map(function (item, key) {
                     sourceArray.push(item);
                 });
-                console.log(sourceArray);
+                console.log("Source Array: ", sourceArray);
                 appendArticle(sourceArray);
             });
 }
@@ -126,6 +135,7 @@ function getSourcesForCategory(category) {
 function appendArticle(array) {
     // Used to shuffle array order
     //array = shuffleArray(array);
+    console.log("Shuffled Array: ", array);
 
     array.map(function (item, key) {
         var item_container = $('<div class="post-container">');
@@ -133,16 +143,20 @@ function appendArticle(array) {
         //var item_content = $('<a class="article-link">').attr('href', '../Article/?url=' + item.url);
         var item_content = $('<a class="article-link">').click(function () {
             showArticle('' + item.url);
+            $.get("../../Sources/AddToPopular/?url=" + item.url)
+           .fail(function (res) {
+               console.log("failed to add to DB", item);
+           })
+           .done(function (res) {
+               console.log("added popular vote to" + item.url);
+           });
         });
 
         var shareBar = $('<div class="sharebar">');
-        var shareSaver = $('<p>Save this Article</p>');
+        var shareSaver = $('<p><i class="material-icons">favorite_border</i></p>');
         shareSaver.click(function (e) {
-            console.log(item.url);
-
-            alert("Sorry this feature isn't ready for primetime just yet.");
+            console.log(item);
         });
-        shareSaver.append($('<i class="material-icons">').text('save'));
 
         shareBar.append(shareSaver);
         //shareBar.append($('<p>').append($('<i class="material-icons">').text('comment')));
@@ -168,6 +182,33 @@ function appendArticle(array) {
     //$(".featured .post-container:nth-child(3n)").addClass('wide');
 }
 
+function appendPopular() {
+    $.get("/Sources/GetPopular")
+            .fail(function (res) {
+                console.log("failed to add to DB", res);
+            })
+            .done(function (res) {
+                res = JSON.parse(res);
+                res.reverse();
+                res.map(function (item, key) {
+                    var item_container = $('<div class="post-container">');
+                    var item_content = $('<a class="article-link">').click(function () {
+                        showArticle('' + item.url);
+                        console.log(item.url);
+                    });
+                    item_content.append($('<p class="thread">').text(item.author));
+                    item_content.append($('<p>').append(item.title));
+                    if (!item.urlToImage) {
+                        item_content.append($('<img>').attr('src', '../../lib/images/default_news_icon.svg'));
+                    } else {
+                        item_content.append($('<img onerror="imgError(this)">').attr('src', item.urlToImage));
+                    }
+
+                    item_container.append(item_content);
+                    $('#popular').append(item_container);
+                });
+            });
+}
 /**
  * Randomize array element order in-place.
  * Using Durstenfeld shuffle algorithm.
@@ -196,27 +237,22 @@ function closeSource(source) {
 }
 
 function showArticle(url, articleID) {
+    $('.left-container').velocity({
+        'opacity': '0',
+        'z-index': '-1'
+    }, { duration: 250, delay: 200 });
+    $('.right-container').velocity({
+        'left': '0',
+        'z-index': '1'
+    }, { duration: 250, delay: 50 });
 
-    if (window.innerWidth > 768) {
-        $('.right-container').velocity({
-            'opacity': '0',
-        }, { duration: 100 });
-    } else {
-        $('.left-container').velocity({
-            'position': 'fixed'
-        }, { duration: 250, delay: 200 });
-
-        $('.inner_nav').velocity({
-            'display': 'flex',
-            'height': '32px'
-        }, { duration: 250, delay: 50 });
-        $('#back-btn').velocity({
-            'opacity': '1'
-        }, { duration: 250, delay: 50 });
-        $('header').velocity({
-            'height': '0'
-        }, { duration: 250, delay: 200 });
-    }
+    $('.inner_nav').velocity({
+        'display': 'block',
+        'height': '32px'
+    }, { duration: 250, delay: 50 });
+    $('#back-btn').velocity({
+        'opacity': '1'
+    }, { duration: 250, delay: 50 });
 
     fetch('http://api.embed.ly/1/extract?key=08ad220089e14298a88f0810a73ce70a&url=' + url)
         .then(res => {
@@ -254,47 +290,81 @@ function showArticle(url, articleID) {
 
             article_container.append(article_title);
             article_container.append(attribution_header);
-            article_container.append(json.content);
+
+            var content = json.content,
+                map = {};
+
+            $(content).each(function (key, node) {
+                $(node).children().each(function (ckey, child) {
+                    switch (child.nodeName) {
+                        case "IMG":
+                            article_container.append(child);
+                            break;
+
+                        case "IFRAME":
+                            console.log(child);
+                            break;
+
+                        case "FIGURE":
+                            if ($(child).find('iframe')) {
+                                $(child).children().map(function (key, el) {
+                                    if (el.nodeName == "IFRAME") {
+                                        var src = $(el).attr('src');
+                                        var ext = src.split('.').pop();
+                                        var picture = $('<iframe src="' + src + '">');
+                                        article_container.append(picture);
+                                    } else {
+                                        article_container.append(child);
+                                    }
+                                });
+                            } else {
+                                article_container.append(child);
+                            }
+                            break;
+
+                        default:
+                            article_container.append(child);
+                            break;
+
+                    }
+                });
+            });
 
             $('.reader').html(article_container);
             $('.reader').prepend($('<span id="top">'));
         });
 
-    if (window.innerWidth > 768) {
-        $('.right-container').velocity({
-            'opacity': '1'
-        }, { duration: 250, delay: 350 });
-    } else {
-        $('.right-container').velocity({
-            'display': 'flex',
-            'left': '0'
-        }, { duration: 250, delay: 200 });
-    }
+    //if (window.innerWidth > 768) {
+    //    $('.right-container').velocity({
+    //        'opacity': '1'
+    //    }, { duration: 250, delay: 350 });
+    //} else {
+    //    $('.right-container').velocity({
+    //        'display': 'flex',
+    //        'left': '0'
+    //    }, { duration: 250, delay: 200 });
+    //}
 }
+
 function closeArticle() {
-    if (window.innerWidth > 768) {
-        $('.right-container').velocity({
-            'opacity': '0',
-        }, { duration: 250, delay: 50 });
-    } else {
-        $('.left-container').velocity({
-            'display': 'flex',
-            'left': '0'
-        }, { duration: 250, delay: 50 });
-        $('.right-container').velocity({
-            'display': 'none',
-            'left': '100vw'
-        }, { duration: 250, delay: 50 });
-        $('.inner_nav').velocity({
-            'height': '0'
-        }, { duration: 250, delay: 50 });
-        $('#back-btn').velocity({
-            'opacity': '0'
-        }, { duration: 250, delay: 50 });
-        $('header').velocity({
-            'height': '48px'
-        }, { duration: 250, delay: 200 });
-    }
+    $('.left-container').velocity({
+        'opacity': '1',
+        'z-index': '1'
+    }, { duration: 250, delay: 50 });
+    $('.right-container').velocity({
+        'right': '100vw',
+        'z-index': '0'
+    }, { duration: 250, delay: 50 });
+    $('.inner_nav').velocity({
+        'height': '0'
+    }, { duration: 250, delay: 50 });
+    $('#back-btn').velocity({
+        'opacity': '0'
+    }, { duration: 250, delay: 50 });
+    $('header').velocity({
+        'height': '48px'
+    }, { duration: 250, delay: 200 });
+
     setTimeout(function () {
         $(".reader").html('');
     }, 250);
