@@ -18,19 +18,13 @@
 
     @RenderSection("styles", required: false)
     <meta name="viewport" content="width=device-width" />
+
+    <script src="~/lib/scripts/Vendor/jquery-3.1.1.min.js"></script>
+    <script src="~/ServiceWorkerController.js"></script>
 </head>
 <body>
     @RenderPage("~/Views/Shared/_HeaderNavBar.cshtml")
 
-    <environment names="Development">
-        <script src="~/lib/scripts/jquery-3.1.1.js"></script>
-        <script src="~/lib/scripts/modernizr-2.8.3.js"></script>
-        <script src="~/lib/scripts/jquery.sticky.js"></script>
-        <script src="~/lib/scripts/velocity.js"></script>
-        <script src="~/lib/scripts/smoothState.js"></script>
-        <script src="~/lib/scripts/index.js"></script>
-    </environment>
-    
     <main class="dark-toggle" id="main">
         <section class="left-container">
             @RenderSection("featured", required: false)
@@ -50,7 +44,11 @@
         @RenderBody()
     </main>
 
-
+    <script src="~/lib/scripts/Vendor/modernizr-2.8.3.js"></script>
+    <script src="~/lib/scripts/Vendor/jquery.sticky.js"></script>
+    <script src="~/lib/scripts/Vendor/velocity.js"></script>
+    <script src="~/lib/scripts/Vendor/jquery.lazyload.min.js"></script>
+    <script defer src="~/lib/scripts/index.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

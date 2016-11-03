@@ -28,6 +28,7 @@ header {
     justify-content: space-around;
     width: 100vw;
     z-index: 99;
+    position: absolute;
 }
 
 a {
@@ -62,7 +63,6 @@ h3 {
 }
 
 main {
-    z-index: 1;
     width: 100vw;
     margin: 0;
     padding: 0;
@@ -352,7 +352,6 @@ main {
     color: #515151;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
     cursor: pointer;
-    z-index: 1;
 }
 
     .post-container img {
@@ -439,7 +438,6 @@ main {
 }
 /* Containers */
 .right-container {
-    display: flex;
     flex: 0 0 calc(70vw - 1em);
     flex-flow: column;
     width: inherit;
@@ -525,7 +523,6 @@ main {
     min-height: 100vh;
     flex: 0 0 calc(30vw - 1em);
     margin-right: 1em;
-    z-index: 1;
 }
 
 /* Comments */
